@@ -1,84 +1,57 @@
-import "./app.module.css";
-import Accordion from "@/components/accordion/Accordion";
-import AccordionItem from "@/components/accordion/AccordionItem";
-import AccordionsContainer from "@/components/accordion/AccordionsContainer";
-import { css } from "@emotion/react";
+import tw, {css} from 'twin.macro';
 
-import React, { useState } from "react";
+import React from 'react';
 
-import "@/bootstrap/dist/css/bootstrap.min.css";
-import { FaReact } from "react-icons/fa/";
-import RotatingIcon from "@/components/animated/RotatingIcon";
-import EmailTab from "@/components/email/EmailTab";
+import EmailTab from '@/components/email/EmailTab';
+import {EmailModel} from '@/components/email/EmailModel';
 
 export default function App() {
-  const accordionItems = [
-    {
-      id: "1",
-      header: "Accordion Item 1",
-      body: "Accordion Item 1 Body",
-    },
-    {
-      id: "2",
-      header: "Accordion Item 2",
-      body: "Accordion Item 2 Body",
-    },
-    {
-      id: "3",
-      header: "Accordion Item 3",
-      body: "Accordion Item 3 Body",
-    },
-  ];
+    const emails: EmailModel[] = [
+        {
+            id: '1',
+            SenderName: 'Sender 1',
+            SenderEmail: 'Sender1@email.com',
+            Subject: 'Subject 1',
+            Date: 'Date 1',
+            Body: 'Body 1',
+        },
+        {
+            id: '2',
+            SenderName: 'Sender 2',
+            SenderEmail: 'Sender2@email.com',
+            Subject: 'Subject 2',
+            Date: 'Date 2',
+            Body: 'Body 2',
+        },
+        {
+            id: '3',
+            SenderName: 'Sender 3',
+            Subject: 'Subject 3',
+            SenderEmail: 'Sender3@email.com',
+            Date: 'Date 3',
+            Body: 'Body 3',
+        },
+    ];
 
-  return (
-    <div
-      className="App"
-      css={css`
-        height: 896px;
-        width: 414px;
-      `}
-    >
-      <div className={"container-fluid h-100"}>
-        <div id={"col-left"}></div>
-        <div id={"content"} className={"h-100"}>
-          <div
-            className={
-              "bg-light w-100 h-100 d-flex flex-column align-items-center"
-            }
-          >
-            <div
-              id={"icon"}
-              className={""}
-              css={css`
-                font-size: 10rem;
-              `}
-            >
-              <RotatingIcon from={0} to={360} time={2} alternate={false}>
-                <FaReact />
-              </RotatingIcon>
+    return (
+        <div className='flex items-center justify-center'>
+            <div className='App' css={css`
+                  height: 896px;
+                  width: 414px;
+        
+                  ${tw`bg-white dark:bg-gray-900`}
+                `}>
+                <div className='h-full'>
+                    <div className='h-1/3 w-full'>
+
+                    </div>
+                    <div className='h-2/3 w-full flex justify-center'>
+                        <div className='w-11/12'>
+                            <EmailTab emails={emails}/>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <br />
-            <div
-              className={
-                "d-flex justify-content-center align-items-center w-100"
-              }
-            >
-              <div id={"Faq"} className={"w-75"}>
-                <AccordionsContainer>
-                  {accordionItems.map((value) => (
-                    <Accordion key={value.id}>
-                      <AccordionItem eventKey={"0"} header={value.header}>
-                        {value.body}
-                      </AccordionItem>
-                    </Accordion>
-                  ))}
-                </AccordionsContainer>
-              </div>
-            </div>
-          </div>
         </div>
-        <div id={"col-right"}></div>
-      </div>
-    </div>
-  );
+    );
 }

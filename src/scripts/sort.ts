@@ -11,7 +11,7 @@ export function byPropertiesOf<T extends object>(sortBy: Array<sortArg<T>>) {
   function compareByProperty(arg: sortArg<T>) {
     let key: keyof T;
     let sortOrder = 1;
-    if (typeof arg === "string" && arg.startsWith("-")) {
+    if (typeof arg === 'string' && arg.startsWith('-')) {
       sortOrder = -1;
       // Typescript is not yet smart enough to infer that substring is keyof T
       key = arg.substring(1) as keyof T;

@@ -19,11 +19,11 @@
     "jsxImportSource": "@emotion/react",
     "baseUrl": ".",
     "paths": {
-      "@/scss/*": ["./src/scss/*"],
+      "@/styles/*": ["./src/styles/*"],
       "@/components/*": ["./src/components/*"],
       "@/bootstrap/*": ["./node_modules/bootstrap/*"]
     }
   },
-  "include": ["src", "server.ts"],
+  "include": ["src", "server.ts", "types"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
