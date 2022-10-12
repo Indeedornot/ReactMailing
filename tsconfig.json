@@ -24,6 +24,7 @@
       "@/bootstrap/*": ["./node_modules/bootstrap/*"]
     }
   },
-  "include": ["src", "server.ts", "types"],
+  "include": ["src",
+    "server/server.ts", "types"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

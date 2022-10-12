@@ -37,7 +37,7 @@ export default function EmailTab(props: EmailTabProps) {
         emailTabHeader: css`
             ${tw`
                 w-full py-3.5 rounded-t-lg
-                bg-indigo-50 dark:bg-gray-900
+                bg-indigo-200 dark:bg-gray-900
                 shadow-lg
                 border-b-2 border-blue-400
             `}
