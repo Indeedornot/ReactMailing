@@ -19,12 +19,13 @@
     "jsxImportSource": "@emotion/react",
     "baseUrl": ".",
     "paths": {
-      "@/styles/*": ["./src/styles/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/bootstrap/*": ["./node_modules/bootstrap/*"]
+      "@/styles/*": ["./client/styles/*"],
+      "@/components/*": ["./client/components/*"],
+      "@/bootstrap/*": ["./node_modules/bootstrap/*"],
+      "@/shared/*": ["./shared/*"],
     }
   },
-  "include": ["src",
-    "server/server.ts", "types"],
+  "include": [
+    "client", "server", "shared"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

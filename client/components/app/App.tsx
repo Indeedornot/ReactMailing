@@ -1,9 +1,10 @@
 import tw, {css} from 'twin.macro';
 
-import React from 'react';
+import React, {useState} from 'react';
 
 import EmailTab from '@/components/email/EmailTab';
-import {EmailModel} from '@/components/email/EmailModel';
+import {EmailModel} from '@/shared/emails/models/EmailModel';
+import {fetchEmails} from '@/shared/emails/scripts/client/EmailFetcher';
 
 export default function App() {
     const sampleEmails: EmailModel[] = [
@@ -32,7 +33,7 @@ export default function App() {
             Body: 'Body 3',
         },
     ];
-    const [emails, setEmails] = React.useState<EmailModel[]>(sampleEmails);
+    const [emails, setEmails] = useState<EmailModel[]>(sampleEmails);
 
     return (
         <div className='flex items-center justify-center'>
@@ -48,7 +49,7 @@ export default function App() {
                         </div>
                         <div className='h-4/5 flex items-center justify-center'>
                             <div className='bg-indigo-200 dark:bg-gray-900 h-4/5 w-11/12 rounded-lg'>
-                                <button className='h-full w-full bg-black'></button>
+                                <button className='h-full w-full bg-black' onClick={() => fetchEmails().then(data => setEmails(data)).then(() => console.log(emails))}></button>
                             </div>
                         </div>
                     </div>

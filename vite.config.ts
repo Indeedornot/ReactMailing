@@ -33,7 +33,7 @@ export default defineConfig({
     ],
     esbuild: {
         // https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
-        logOverride: { 'this-is-undefined-in-esm': 'silent' },
+        logOverride: {'this-is-undefined-in-esm': 'silent'},
     },
     resolve: {
         alias: [
@@ -41,11 +41,12 @@ export default defineConfig({
                 find: '@/bootstrap',
                 replacement: path.resolve(__dirname, 'node_modules/bootstrap'),
             },
-            {find: '@/styles', replacement: path.resolve(__dirname, 'src/styles')},
+            {find: '@/styles', replacement: path.resolve(__dirname, 'client/styles')},
             {
                 find: '@/components',
-                replacement: path.resolve(__dirname, 'src/components'),
+                replacement: path.resolve(__dirname, 'client/components'),
             },
+            {find: '@/shared', replacement: path.resolve(__dirname, 'shared')},
         ],
     },
     server: {port: 3000},

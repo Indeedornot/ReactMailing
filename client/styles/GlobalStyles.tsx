@@ -1,4 +1,4 @@
-// src/styles/GlobalStyles.tsx
+// client/styles/GlobalStyles.tsx
 //https://github.com/ben-rogerson/twin.examples/tree/master/vite-emotion-typescript
 
 import React from 'react';

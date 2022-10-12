@@ -1,4 +1,4 @@
-import {EmailModel} from '@/components/email/EmailModel';
+import {EmailModel} from '@/shared/emails/models/EmailModel';
 import parse from 'html-react-parser';
 import {sort} from '../../scripts/sort';
 import tw, {css} from 'twin.macro';
@@ -6,7 +6,7 @@ import {useState} from 'react';
 import AccordionItem from '@/components/accordion/AccordionItem';
 
 export default function EmailTab(props: EmailTabProps) {
-    const [emails, SetEmails] = useState([...props.emails]);
+    const [emails, SetEmails] = useState(props.emails);
     const [sortedBy, setSorted] = useState('');
 
     const sortBy = (property: keyof EmailModel) => {

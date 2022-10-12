@@ -6,7 +6,7 @@
     "build": "tsc && vite build",
     "serve": "vite preview",
     "preview": "vite",
-    "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
+    "lint:fix": "eslint client --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
     "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
     "lint": "yarn lint:format && yarn lint:fix ",
     "type-check": "tsc"
@@ -21,7 +21,6 @@
     "concurrently": "^7.4.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "flowbite": "^1.5.3",
     "html-react-parser": "^3.0.4",
     "imap": "^0.8.19",
     "nodemon": "^2.0.20",

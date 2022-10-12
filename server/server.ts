@@ -1,9 +1,11 @@
+// noinspection ES6PreferShortImport
+
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
 
 import {createServer as createViteServer} from 'vite';
-import {getEmails} from './scripts/emails';
+import {getEmails} from '../shared/emails/scripts/server/EmailController';
 
 const PORT = process.env.PORT || 5000;
 
@@ -31,7 +33,7 @@ async function createServer(root = process.cwd()) {
     app.use(viteServer.middlewares);
 
     app.get('/getEmails', async (req, res) => {
-        await getEmails(1,10);
+        res.json(await getEmails(1, 10));
     })
 
     app.get('/api/v1' , (req, res) => {
@@ -56,7 +58,7 @@ async function createServer(root = process.cwd()) {
             // 3. Load the server entry. vite.ssrLoadModule automatically transforms
             //    your ESM source code to be usable in Node.js! There is no bundling
             //    required, and provides efficient invalidation similar to HMR.
-            const {render} = await viteServer.ssrLoadModule(path.resolve(root, 'src/entry-server.tsx'));
+            const {render} = await viteServer.ssrLoadModule(path.resolve(root, 'client/entry-server.tsx'));
 
             // 4. render the app HTML. This assumes entry-server.js's exported `render`
             //    function calls appropriate framework SSR APIs,

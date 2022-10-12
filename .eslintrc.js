@@ -48,6 +48,7 @@ module.exports = {
     semi: 'off',
     '@typescript-eslint/semi': 'warn',
     quotes: ['warn', 'single'],
-    'react/no-unknown-property': ['error', { ignore: ['css', 'tw'] }]
+    'react/no-unknown-property': ['error', { ignore: ['css', 'tw'] }],
+    'prefer-const': 'warn',
   },
 };
