@@ -29,13 +29,11 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:jsx-a11y/recommended',
+    'prettier',
   ],
   plugins: ['prettier', '@emotion'],
   rules: {
-    'react/react-in-jsx-scope': 'off',
     'jsx-a11y/accessible-emoji': 'off',
-    'react/prop-types': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
     'jsx-a11y/anchor-is-valid': [
       'error',
       {
@@ -44,11 +42,25 @@ module.exports = {
         aspects: ['invalidHref', 'preferButton'],
       },
     ],
+    '@typescript-eslint/explicit-function-return-type': 'off',
+
+    'react/prop-types': 'warn',
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-wrap-multilines': [
+      'error',
+      {
+        declaration: 'parens-new-line',
+        assignment: 'parens-new-line',
+        return: 'parens-new-line',
+        arrow: 'parens-new-line',
+        condition: 'parens-new-line',
+        logical: 'ignore',
+        prop: 'ignore',
+      },
+    ],
     'react/no-unescaped-entities': 'warn',
-    semi: 'off',
-    '@typescript-eslint/semi': 'warn',
-    quotes: ['warn', 'single'],
-    'react/no-unknown-property': ['error', { ignore: ['css', 'tw'] }],
+    'react/no-unknown-property': ['error', {ignore: ['css', 'tw']}],
+
     'prefer-const': 'warn',
   },
 };

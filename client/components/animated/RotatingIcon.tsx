@@ -1,5 +1,5 @@
-import { css } from '@emotion/react';
-import React, { HTMLAttributes } from 'react';
+import {css} from '@emotion/react';
+import React, {HTMLAttributes} from 'react';
 
 //TODO write implementation for from x to y
 export default function RotatingIcon({
@@ -23,7 +23,6 @@ export default function RotatingIcon({
     & > :only-child {
       animation: rotating ${time}s linear infinite;
       animation-direction: ${alternate ? 'alternate' : 'normal'};
-      
     }
   `;
   return (

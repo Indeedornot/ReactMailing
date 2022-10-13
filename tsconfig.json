@@ -22,10 +22,9 @@
       "@/styles/*": ["./client/styles/*"],
       "@/components/*": ["./client/components/*"],
       "@/bootstrap/*": ["./node_modules/bootstrap/*"],
-      "@/shared/*": ["./shared/*"],
+      "@/shared/*": ["./shared/*"]
     }
   },
-  "include": [
-    "client", "server", "shared"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["client", "server", "shared"],
+  "references": [{"path": "./tsconfig.node.json"}]
 }

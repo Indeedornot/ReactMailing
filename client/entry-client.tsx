@@ -12,18 +12,20 @@ import {ComponentPreviews, useInitial} from '../.reactbuddy';
 const container = document.getElementById('root');
 
 const FullApp = () => {
-    return (
-        <React.StrictMode>
-            <GlobalStyles/>
-            <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
-                <App/>
-            </DevSupport>
-        </React.StrictMode>
-    );
+  return (
+    <React.StrictMode>
+      <GlobalStyles />
+      <DevSupport
+        ComponentPreviews={ComponentPreviews}
+        useInitialHook={useInitial}>
+        <App />
+      </DevSupport>
+    </React.StrictMode>
+  );
 };
 
 if (!container?.innerText) {
-    render(<FullApp/>, container);
+  render(<FullApp />, container);
 } else {
-    hydrate(<FullApp/>, container);
+  hydrate(<FullApp />, container);
 }
