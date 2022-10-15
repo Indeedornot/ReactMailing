@@ -9,23 +9,26 @@ import {DevSupport} from '@react-buddy/ide-toolbox';
 
 import {ComponentPreviews, useInitial} from '../.reactbuddy';
 
+import {Provider} from 'react-redux';
+import {store} from '@/client/redux/store';
+
 const container = document.getElementById('root');
 
 const FullApp = () => {
-  return (
-    <React.StrictMode>
-      <GlobalStyles />
-      <DevSupport
-        ComponentPreviews={ComponentPreviews}
-        useInitialHook={useInitial}>
-        <App />
-      </DevSupport>
-    </React.StrictMode>
-  );
+	return (
+		<React.StrictMode>
+			<GlobalStyles />
+			<DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
+				<Provider store={store}>
+					<App />
+				</Provider>
+			</DevSupport>
+		</React.StrictMode>
+	);
 };
 
 if (!container?.innerText) {
-  render(<FullApp />, container);
+	render(<FullApp />, container);
 } else {
-  hydrate(<FullApp />, container);
+	hydrate(<FullApp />, container);
 }
