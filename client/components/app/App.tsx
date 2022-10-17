@@ -43,10 +43,8 @@ export default function App() {
 							</div>
 						</div>
 					</div>
-					<div className='h-2/3 w-full flex justify-center'>
-						<div className='w-11/12'>
-							<EmailDisplay emails={emails} refreshEmails={refreshEmails} sortEmails={sortEmailsBy} />
-						</div>
+					<div className='w-full'>
+						<EmailDisplay emails={emails} refreshEmails={refreshEmails} sortEmails={sortEmailsBy} flush={true} />
 					</div>
 				</div>
 			</div>

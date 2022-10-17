@@ -55,7 +55,7 @@ export default function EmailDisplay({emails, refreshEmails, sortEmails, flush =
 					</button>*/}
 				</div>
 			</div>
-			<EmailList emails={emails} scrollbar={false} className='rounded-b-md' />
+			<EmailList emails={emails} scrollbar={false} flush={true} className={`${!flush && `rounded-b-md`}`} />
 		</div>
 	);
 }

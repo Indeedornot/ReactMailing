@@ -4,7 +4,11 @@ import {EmailModel} from '@/shared/emails/models/EmailModel';
 import {HTMLAttributes} from 'react';
 import cx from 'classnames';
 
-export function EmailList({emails, scrollbar, className, ...atr}: EmailListProps) {
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+
+export function EmailList({emails, scrollbar, flush, className, ...atr}: EmailListProps) {
 	const scrollbarLess = css`
 		scrollbar-width: none;
 		-ms-overflow-style: none;
@@ -22,7 +26,7 @@ export function EmailList({emails, scrollbar, className, ...atr}: EmailListProps
 					<AccordionItem
 						key={index}
 						className='w-full h-[60px]'
-						flush={true}
+						flush={flush}
 						open={false}
 						header={
 							<div
@@ -36,7 +40,7 @@ export function EmailList({emails, scrollbar, className, ...atr}: EmailListProps
 								<div className='col-span-9 row-span-1 overflow-hidden text-ellipsis whitespace-nowrap'>
 									{email.SenderName ? email.SenderName : email.SenderEmail}
 								</div>
-								<div className='col-span-3 row-span-1 overflow-hidden text-ellipsis text-right whitespace-nowrap'>{email.Date}</div>
+								<div className='col-span-3 row-span-1 overflow-hidden text-ellipsis text-right whitespace-nowrap'>{dayjs().to(email.Date)}</div>
 								<div className='col-span-12 row-span-1 overflow-hidden text-ellipsis text-sm whitespace-nowrap'>
 									{email.Subject ? email.Subject : '<No Subject>'}
 								</div>
@@ -59,4 +63,5 @@ export function EmailList({emails, scrollbar, className, ...atr}: EmailListProps
 type EmailListProps = HTMLAttributes<HTMLDivElement> & {
 	emails: EmailModel[];
 	scrollbar: boolean;
+	flush: boolean;
 };

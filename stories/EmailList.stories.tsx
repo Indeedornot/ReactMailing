@@ -17,13 +17,18 @@ export default {
 				type: 'boolean',
 			},
 		},
+		flush: {
+			control: {
+				type: 'boolean',
+			},
+		},
 	},
 };
 
-const Template = (args: {emails: object; scrollbar: boolean}) => {
+const Template = (args: {emails: object; scrollbar: boolean; flush: boolean}) => {
 	const parsedEmails = JSON.parse(JSON.stringify(args.emails)) as EmailModel[];
 
-	return <EmailList emails={parsedEmails} scrollbar={args.scrollbar} />;
+	return <EmailList emails={parsedEmails} scrollbar={args.scrollbar} flush={args.flush} />;
 };
 export const Default = Template.bind({});
 
@@ -57,4 +62,5 @@ const sampleEmails = [
 Default.args = {
 	emails: sampleEmails,
 	scrollbar: false,
+	flush: true,
 };
