@@ -1,24 +1,17 @@
 import React, {createRef, HTMLAttributes, useEffect, useState} from 'react';
-import tw, {css} from 'twin.macro';
+import tw, {styled} from 'twin.macro';
 import {ToggleHeader} from '@/components/accordion/ToggleHeader';
 import {ButtonHeader} from '@/components/accordion/ButtonHeader';
-
-import styled from '@emotion/styled';
+import cx from 'classnames';
 
 export default function AccordionItem(props: AccordionItemProps) {
-	const {
-		children = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-		header = 'This is an accordion header example',
-		headerType = 'button',
-		open = false,
-		flush = false,
-		...atr
-	} = props;
+	const {children, header, headerType = 'button', open = false, flush = false, ...atr} = props;
 
 	const headerRef = createRef<HTMLDivElement>();
 	const bodyRef = createRef<HTMLDivElement>();
 
 	const [isOpen, setIsOpen] = useState(open);
+
 	useEffect(() => {
 		if (!bodyRef.current) return;
 		const accordionContent = bodyRef.current;
@@ -53,32 +46,27 @@ export default function AccordionItem(props: AccordionItemProps) {
 		${tw`flex flex-col`}
 	`;
 
-	const AccordionHeader = styled.div`
-		${!flush && tw`px-5`}
-
-		${tw`		flex flex-grow-0 flex-shrink items-center w-full h-full
-            bg-indigo-50 dark:bg-gray-900
-            dark:text-blue-50
-            transition 
-		`}
-	`;
-
+	// eslint-disable-next-line react/display-name
+	const AccordionHeader = React.forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>((props, ref) => {
+		const {children, className, ...atr} = props;
+		return (
+			<div
+				ref={ref}
+				className={cx(`${!flush && 'px-5'} flex flex-grow-0 flex-shrink items-center w-full bg-primary transition text-font-primary`, className)}
+				{...atr}>
+				{children}
+			</div>
+		);
+	});
 	const AccordionCollapse = styled.div`
 		transition: max-height 0.3s ease-out, padding 0.3s ease;
 		${open ? 'max-height: 100%' : 'max-height: 0px'};
 
 		${tw`overflow-hidden flex-shrink-0 flex-grow-0 flex`}
 	`;
-	const AccordionBody = styled.div`
-		${tw`
-            pt-2 pb-3.5
-            bg-white dark:bg-gray-800 
-            dark:text-blue-50
-            w-full h-full
-    `}
-
-		${!flush && tw`px-5`}
-	`;
+	const AccordionBody = ({children}: {children: React.ReactNode}) => {
+		return <div className={`${!flush && 'px-5 pt-2'} bg-primary text-font-primary w-full h-full`}>{children}</div>;
+	};
 
 	return (
 		<AccordionItem>
@@ -93,8 +81,8 @@ export default function AccordionItem(props: AccordionItemProps) {
 }
 
 type AccordionItemProps = HTMLAttributes<HTMLDivElement> & {
-	children?: React.ReactNode;
-	header?: React.ReactNode;
+	children: React.ReactNode;
+	header: React.ReactNode;
 	headerType?: 'button' | 'toggle';
 	open?: boolean;
 	flush?: boolean;

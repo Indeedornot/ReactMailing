@@ -28,6 +28,7 @@ async function createServer(root = process.cwd()) {
 				interval: 100,
 			},
 		},
+		appType: 'custom',
 	});
 	// use vite's connect instance as middleware
 	app.use(viteServer.middlewares);
@@ -55,28 +56,19 @@ async function createServer(root = process.cwd()) {
 			// 3. Load the server entry. vite.ssrLoadModule automatically transforms
 			//    your ESM source code to be usable in Node.js! There is no bundling
 			//    required, and provides efficient invalidation similar to HMR.
-			const {render} = await viteServer.ssrLoadModule(path.resolve(root, 'client/entry-server.tsx'));
+			const render = (await viteServer.ssrLoadModule(path.resolve(root, 'client/entry-server.tsx'))).render;
 
 			// 4. render the app HTML. This assumes entry-server.js's exported `render`
 			//    function calls appropriate framework SSR APIs,
 			//    e.g. ReactDOMServer.renderToString()
-			const appHtml = await render(url);
-			//TODO: Read about server rendering and the difference here between client and server rendering
-			/*
-            Render a React element to its initial HTML. This should only be used on the server. React will return an HTML
-            string. You can use this method to generate HTML on the server and send the markup down on the initial request
-            for faster page loads and to allow search engines to crawl your pages for SEO purposes.
-            If you call ReactDOM.hydrate() on a node that already has this server-rendered markup, React will preserve it
-            and only attach event handlers, allowing you to have a very performant first-load experience.
-             */
+			const appHtml = await render();
 
 			// 5. Inject the app-rendered HTML into the template.
-			const html = template.replace('<!--ssr-outlet-->', appHtml);
+			const html = template.replace(`<!--ssr-outlet-->`, appHtml);
 
 			// 6. Send the rendered HTML back.
 			res.status(200).set({'Content-Type': 'text/html'}).end(html);
 		} catch (e: any) {
-			viteServer.ssrFixStacktrace(e);
 			console.log(e.stack);
 			// If an error is caught, let Vite fix the stack trace so it maps back to
 			// your actual source code.
@@ -85,8 +77,11 @@ async function createServer(root = process.cwd()) {
 		}
 	});
 
-	app.listen(PORT);
-	console.log(`Server running at http://localhost:${PORT}`);
+	return {app};
 }
 
-createServer();
+createServer().then(({app}) => {
+	app.listen(PORT, () => {
+		console.log(`Server running at http://localhost:${PORT}`);
+	});
+});

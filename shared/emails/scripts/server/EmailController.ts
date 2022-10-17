@@ -1,6 +1,7 @@
 import {ImapFlow} from 'imapflow';
 import {EmailModel} from '@/shared/emails/models/EmailModel';
 import {simpleParser} from 'mailparser';
+import {privateCredentials} from './PrivateCredentials';
 
 //useful
 //https://afterlogic.com/mailbee-net/docs/MailBee.ImapMail.SystemMessageFlags.html
@@ -9,12 +10,12 @@ export async function getEmails(from: number, to: number): Promise<EmailModel[]>
 	const emails: EmailModel[] = [];
 
 	const client = new ImapFlow({
-		host: '',
-		port: 993,
+		host: privateCredentials.host,
+		port: privateCredentials.port,
 		secure: true,
 		auth: {
-			user: '',
-			pass: '',
+			user: privateCredentials.username,
+			pass: privateCredentials.password,
 		},
 		logger: false,
 	});
@@ -33,7 +34,6 @@ export async function getEmails(from: number, to: number): Promise<EmailModel[]>
 		}
 
 		for await (const seq of seqs) {
-			//console.log(seq);
 			const {content} = await client.download(seq.toString());
 
 			const parsed = await simpleParser(content);

@@ -6,3 +6,5 @@ export type EmailModel = {
 	SenderName: string | undefined;
 	SenderEmail: string | undefined;
 };
+
+export type EmailModelSortArgs = keyof EmailModel | `-${string & keyof EmailModel}`;
