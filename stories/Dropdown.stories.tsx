@@ -72,7 +72,6 @@ const deconstructArray = (array: any[]) => {
 			items.push(<DropdownItem>{array[i]}</DropdownItem>);
 		} else {
 			const childArray = Object.values(array[i]);
-			console.log(childArray);
 			items.push(
 				<DropdownItem parent={true}>
 					<DropdownGroupHover>{childArray[0]}</DropdownGroupHover>

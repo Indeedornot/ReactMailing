@@ -44,15 +44,6 @@ export default function EmailDisplay({emails, refreshEmails, sortEmails, flush =
 					<button className='flex justify-self-end col-start-12' onClick={() => refresh()}>
 						<MdRestartAlt />
 					</button>
-					{/*<button className='col-span-3' css={buttonStyleless} onClick={() => dispatch(sortEmails('SenderName'))}>
-						From
-					</button>
-					<button className='col-span-6' css={buttonStyleless} onClick={() => dispatch(sortEmails('Subject'))}>
-						Subject
-					</button>
-					<button className='col-span-3' css={buttonStyleless} onClick={() => dispatch(sortEmails('Date'))}>
-						Date
-					</button>*/}
 				</div>
 			</div>
 			<EmailList emails={emails} scrollbar={false} flush={true} className={`${!flush && `rounded-b-md`}`} />

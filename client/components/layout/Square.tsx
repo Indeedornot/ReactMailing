@@ -37,7 +37,6 @@ export default function Square({children}: RatioProps) {
 
 		if (newSize == targetRef.current.offsetWidth && newSize == targetRef.current.offsetHeight) return;
 
-		console.log(newSize);
 		targetRef.current.style.width = `${newSize}px`;
 		targetRef.current.style.height = `${newSize}px`;
 		setDimensions({

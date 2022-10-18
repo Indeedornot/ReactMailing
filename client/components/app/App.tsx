@@ -11,9 +11,10 @@ export default function App() {
 	const [sortedBy, setSortedBy] = useState<EmailModelSortArgs>('Date');
 
 	const refreshEmails = () => {
-		fetchEmails()
-			.then((data) => setEmails(data))
-			.then(() => console.log(emails));
+		fetchEmails().then((data) => {
+			setEmails(data);
+			console.log(data);
+		});
 	};
 	const sortEmailsBy = (by: keyof EmailModel) => {
 		const sortBy: EmailModelSortArgs = sortedBy === by ? `-${by}` : by;

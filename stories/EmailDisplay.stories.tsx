@@ -30,12 +30,8 @@ const Template = (args: {emails: object; flush: boolean}) => {
 	const [emails, setEmails] = useState(parsedEmails);
 	const sortEmails = (by: keyof EmailModel) => {
 		const sortBy: EmailModelSortArgs = sortedBy == by ? `-${by}` : by;
-		console.log('New call');
-		console.log(`Sorted by ${sortedBy}`);
-		console.log(`Sorting by ${sortBy}`);
 		setEmails(sort(emails, sortBy));
 		sortedBy = sortBy;
-		console.log(`Sorted by ${sortedBy}`);
 	};
 
 	return <EmailDisplay emails={emails} flush={args.flush} sortEmails={sortEmails} />;

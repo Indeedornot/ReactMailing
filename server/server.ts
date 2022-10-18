@@ -34,7 +34,7 @@ async function createServer(root = process.cwd()) {
 	app.use(viteServer.middlewares);
 
 	app.get('/getEmails', async (req, res) => {
-		res.json(await getEmails(1, 12));
+		res.json(await getEmails({from: -5, to: '*'}));
 	});
 
 	app.get('/api/v1', (req, res) => {
