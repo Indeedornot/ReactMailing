@@ -644,3 +644,5 @@ FodyWeavers.xsd
 .idea!/shared/emails/scripts/server/PrivateCredentials.ts
 shared/emails/scripts/server/PrivateCredentials.ts
 .idea
+pnpm-lock.yaml
+/pnpm-lock.yaml

@@ -23,7 +23,7 @@
 			"@/components/*": ["./client/components/*"],
 			"@/bootstrap/*": ["./node_modules/bootstrap/*"],
 			"@/shared/*": ["./shared/*"],
-			"@/client/*": ["./client/*"],
+			"@/client/*": ["./client/*"]
 		},
 		"types": ["vite/client", "@emotion/react/types/css-prop", "react/next", "react-dom/next"]
 	},
