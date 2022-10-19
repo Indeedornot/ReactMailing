@@ -646,3 +646,4 @@ shared/emails/scripts/server/PrivateCredentials.ts
 .idea
 pnpm-lock.yaml
 /pnpm-lock.yaml
+stories/sample/
