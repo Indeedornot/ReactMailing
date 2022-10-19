@@ -11,7 +11,7 @@ export default {
 const Template = (args) => (
 	<>
 		<TwinStyles />
-		<App {...args} />
+		<App />
 	</>
 );
 export const Default = Template.bind({});

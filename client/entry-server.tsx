@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import './index.css';
+import '../index.css';
 import App from '@/components/app/App';
 import TwinStyles from '@/styles/Twin/TwinStyles';
 

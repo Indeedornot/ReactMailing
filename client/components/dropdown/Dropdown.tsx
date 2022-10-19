@@ -5,9 +5,11 @@ import cx from 'classnames';
 
 export default function Dropdown({children, header, className, ...atr}: DropdownProps) {
 	const style = css`
+		z-index: 1;
+		
 		/* since nested groupes are not supported we have to use
-		\t\tregular css for the nested dropdowns
-		\t\t*/
+		   tregular css for the nested dropdowns
+		*/
 		li > ul {
 			transform: translatex(100%) scale(0);
 		}

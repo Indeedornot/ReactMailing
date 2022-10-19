@@ -4,8 +4,17 @@ import {FaSort} from 'react-icons/fa';
 import DropdownItem from '@/components/dropdown/DropdownItem';
 import {MdRestartAlt} from 'react-icons/md';
 import {EmailList} from '@/components/email/EmailList';
+import React, {HTMLAttributes} from 'react';
+import cx from 'classnames';
 
-export default function EmailDisplay({emails, refreshEmails, sortEmails, flush = false}: EmailTabProps) {
+export default function EmailDisplay({
+	refreshEmails,
+	sortEmails,
+	children,
+	flush = false,
+	className,
+	...atr
+}: EmailTabProps) {
 	const sortBy = (by: keyof EmailModel) => {
 		sortEmails && sortEmails(by);
 	};
@@ -16,11 +25,14 @@ export default function EmailDisplay({emails, refreshEmails, sortEmails, flush =
 	return (
 		<div className='h-full w-full flex flex-col'>
 			<div
-				className={`
+				className={cx(
+					`
 								flex flex-grow-0 flex-shrink-0
                 w-full py-3.5 ${!flush && 'rounded-t-lg'}
                 bg-primary
-                border-b-2 border-accent`}>
+                border-b-2 border-accent`,
+					className
+				)}>
 				<div className='h-full w-full grid grid-rows-1 grid-cols-12 px-3 text-font-primary'>
 					<div className='flex col-start-1'>
 						<Dropdown header={<FaSort />}>
@@ -46,13 +58,14 @@ export default function EmailDisplay({emails, refreshEmails, sortEmails, flush =
 					</button>
 				</div>
 			</div>
-			<EmailList emails={emails} scrollbar={false} flush={true} className={`${!flush && `rounded-b-md`}`} />
+			{children}
+			{/*<EmailList emails={emails} scrollbar={false} flush={true} className={`${!flush && `rounded-b-md`}`} />*/}
 		</div>
 	);
 }
 
-type EmailTabProps = {
-	emails: EmailModel[];
+type EmailTabProps = HTMLAttributes<HTMLDivElement> & {
+	children: React.ReactNode;
 	refreshEmails?: () => void;
 	sortEmails?: (sortType: keyof EmailModel) => any;
 	flush?: boolean;
