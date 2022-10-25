@@ -32,7 +32,7 @@ module.exports = {
 		'prettier',
 		'plugin:storybook/recommended',
 	],
-	plugins: ['prettier', '@emotion'],
+	plugins: ['prettier'],
 	rules: {
 		'jsx-a11y/accessible-emoji': 'off',
 		'jsx-a11y/anchor-is-valid': [
@@ -66,6 +66,7 @@ module.exports = {
 				ignore: ['css', 'tw'],
 			},
 		],
+		'react/jsx-curly-brace-presence': [2, {props: 'never', children: 'never', propElementValues: 'always'}],
 		'prefer-const': 'warn',
 	},
 };

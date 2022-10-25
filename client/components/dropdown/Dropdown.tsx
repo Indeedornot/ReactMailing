@@ -1,12 +1,12 @@
-import {css} from 'twin.macro';
-import DropdownItemGroup from '@/components/dropdown/DropdownItemGroup';
+import DropdownGroup from '@/components/dropdown/DropdownGroup';
 import React, {HTMLAttributes} from 'react';
 import cx from 'classnames';
+import {css} from 'twind';
 
 export default function Dropdown({children, header, className, ...atr}: DropdownProps) {
 	const style = css`
 		z-index: 1;
-		
+
 		/* since nested groupes are not supported we have to use
 		   tregular css for the nested dropdowns
 		*/
@@ -50,9 +50,9 @@ export default function Dropdown({children, header, className, ...atr}: Dropdown
 		}
 	`;
 	return (
-		<div className={cx('group inline-block', className)} css={style} {...atr}>
+		<div className={cx('group inline-block', style, className)} {...atr}>
 			{header}
-			<DropdownItemGroup parent={true}>{children}</DropdownItemGroup>
+			<DropdownGroup parent={true}>{children}</DropdownGroup>
 		</div>
 	);
 }

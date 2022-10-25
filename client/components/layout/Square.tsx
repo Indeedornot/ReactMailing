@@ -1,5 +1,7 @@
 import React, {useRef, useEffect} from 'react';
 
+const SquareStyle = 'flex items-center justify-center h-full w-full';
+
 //TODO: Add Icon Sizing
 //TODO: Rewrite to use the size of the biggest child
 export default function Square({children}: RatioProps) {
@@ -48,7 +50,7 @@ export default function Square({children}: RatioProps) {
 	useEffect(() => setSquareSize(), [dimensions]);
 
 	return (
-		<div className={'flex items-center justify-center h-full w-full'} ref={parentRef}>
+		<div className={SquareStyle} ref={parentRef}>
 			<div ref={targetRef}>{children}</div>
 		</div>
 	);

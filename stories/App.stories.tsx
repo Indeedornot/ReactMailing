@@ -1,17 +1,11 @@
 import React from 'react';
 
 import App from '../client/components/app/App';
-import TwinStyles from '../client/styles/Twin/TwinStyles';
 
 export default {
 	title: 'Components/App',
 	component: App,
 };
 
-const Template = (args) => (
-	<>
-		<TwinStyles />
-		<App />
-	</>
-);
+const Template = (args) => <App />;
 export const Default = Template.bind({});

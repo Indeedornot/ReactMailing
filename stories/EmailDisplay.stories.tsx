@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
 import EmailDisplay from '../client/components/email/EmailDisplay';
 import {EmailModel, EmailModelSortArgs} from '../shared/emails/models/EmailModel';
 import {sort} from '../client/scripts/sort';
+import {EmailList} from '../client/components/email/EmailList';
 
 export default {
 	title: 'Components/EmailDisplay',
@@ -34,7 +34,11 @@ const Template = (args: {emails: object; flush: boolean}) => {
 		sortedBy = sortBy;
 	};
 
-	return <EmailDisplay emails={emails} flush={args.flush} sortEmails={sortEmails} />;
+	return (
+		<EmailDisplay flush={args.flush} sortEmails={sortEmails}>
+			<EmailList emails={emails} scrollbar={false} flush={true} />
+		</EmailDisplay>
+	);
 };
 export const Default = Template.bind({});
 

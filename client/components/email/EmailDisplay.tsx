@@ -3,10 +3,17 @@ import Dropdown from '@/components/dropdown/Dropdown';
 import {FaSort} from 'react-icons/fa';
 import DropdownItem from '@/components/dropdown/DropdownItem';
 import {MdRestartAlt} from 'react-icons/md';
-import {EmailList} from '@/components/email/EmailList';
 import React, {HTMLAttributes} from 'react';
-import cx from 'classnames';
+import {cx} from 'twind';
 
+const EmailDisplayStyles = {
+	Container: 'h-full w-full flex flex-col',
+	Header: {
+		Container: 'grid grid-cols-12 w-full py-2 px-4 bg-primary border-b-2 border-accent text-font-primary',
+		Dropdown: 'flex self-center justify-self-center',
+		Restart: 'flex col-start-12 self-center justify-self-center w-fit',
+	},
+};
 export default function EmailDisplay({
 	refreshEmails,
 	sortEmails,
@@ -24,41 +31,27 @@ export default function EmailDisplay({
 
 	return (
 		<div className='h-full w-full flex flex-col'>
-			<div
-				className={cx(
-					`
-								flex flex-grow-0 flex-shrink-0
-                w-full py-3.5 ${!flush && 'rounded-t-lg'}
-                bg-primary
-                border-b-2 border-accent`,
-					className
-				)}>
-				<div className='h-full w-full grid grid-rows-1 grid-cols-12 px-3 text-font-primary'>
-					<div className='flex col-start-1'>
+			<div className={cx(EmailDisplayStyles.Container, !flush && 'rounded-t-lg', className)}>
+				<div className={cx(EmailDisplayStyles.Header.Container)}>
+					<div className={cx(EmailDisplayStyles.Header.Dropdown)}>
 						<Dropdown header={<FaSort />}>
 							<DropdownItem>
-								<button className='text-start w-full' onClick={() => sortBy('SenderName')}>
-									By Sender
-								</button>
+								<button onClick={() => sortBy('SenderName')}>By Sender</button>
 							</DropdownItem>
 							<DropdownItem>
-								<button className='text-start w-full' onClick={() => sortBy('Subject')}>
-									By Subject
-								</button>
+								<button onClick={() => sortBy('Subject')}>By Subject</button>
 							</DropdownItem>
 							<DropdownItem>
-								<button className='text-left w-full' onClick={() => sortBy('Date')}>
-									By Date
-								</button>
+								<button onClick={() => sortBy('Date')}>By Date</button>
 							</DropdownItem>
 						</Dropdown>
 					</div>
-					<button className='flex justify-self-end col-start-12' onClick={() => refresh()}>
+					<button className={EmailDisplayStyles.Header.Restart} onClick={() => refresh()}>
 						<MdRestartAlt />
 					</button>
 				</div>
+				{children}
 			</div>
-			{children}
 			{/*<EmailList emails={emails} scrollbar={false} flush={true} className={`${!flush && `rounded-b-md`}`} />*/}
 		</div>
 	);

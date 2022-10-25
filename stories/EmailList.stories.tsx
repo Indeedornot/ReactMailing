@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-import {EmailModel, EmailModelSortArgs} from '../shared/emails/models/EmailModel';
+import React from 'react';
+import {EmailModel} from '../shared/emails/models/EmailModel';
 import {EmailList} from '../client/components/email/EmailList';
 
 export default {

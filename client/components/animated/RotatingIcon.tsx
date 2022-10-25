@@ -1,8 +1,15 @@
-import {css} from '@emotion/react';
 import React, {HTMLAttributes} from 'react';
+import {css, cx} from 'twind';
 
-//TODO write implementation for from x to y
-export default function RotatingIcon({from, to, alternate = true, time, children, ...props}: RotatingIconProps) {
+export default function RotatingIcon({
+	from,
+	to,
+	alternate = true,
+	time,
+	children,
+	className,
+	...props
+}: RotatingIconProps) {
 	const rotationStyle = css`
 		@keyframes rotating {
 			from {
@@ -19,7 +26,7 @@ export default function RotatingIcon({from, to, alternate = true, time, children
 		}
 	`;
 	return (
-		<div css={rotationStyle} {...props}>
+		<div className={cx(rotationStyle, className)} {...props}>
 			{children}
 		</div>
 	);

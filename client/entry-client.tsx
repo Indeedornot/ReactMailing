@@ -1,16 +1,18 @@
 import '../index.css';
-import TwinStyles from '@/styles/Twin/TwinStyles';
-
 import React from 'react';
 
 import App from '@/components/app/App';
 import {createRoot, hydrateRoot} from 'react-dom/client';
+import {setup} from 'twind';
+import {sharedConfig} from '@/styles/Twind.config';
+
+setup(sharedConfig);
+
 const container = document.getElementById('root') as HTMLDivElement;
 
 const FullApp = () => {
 	return (
 		<React.StrictMode>
-			<TwinStyles />
 			<App />
 		</React.StrictMode>
 	);

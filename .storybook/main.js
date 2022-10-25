@@ -1,9 +1,8 @@
 const path = require('path');
 const react = require('@vitejs/plugin-react');
 const tsconfigPaths = require('vite-tsconfig-paths').default;
-const twin = require('twin.macro');
 
-module.exports = {
+const config = {
 	stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
 	addons: [
 		'@storybook/addon-links',
@@ -11,6 +10,7 @@ module.exports = {
 		'@storybook/addon-interactions',
 		'@storybook/preset-create-react-app',
 		'storybook-dark-mode',
+		'storybook-addon-variants',
 		{
 			name: '@storybook/addon-postcss',
 			options: {
@@ -42,30 +42,6 @@ module.exports = {
 	 * @see https://vitejs.dev/config/
 	 */
 	async viteFinal(config) {
-		config.plugins = config.plugins.filter((plugin) => !(Array.isArray(plugin) && plugin[0]?.name.includes('vite:react')));
-
-		config.plugins.push(
-			react({
-				exclude: [/\.stories\.([tj])sx?$/, /node_modules/],
-				jsxImportSource: '@emotion/react',
-				babel: {
-					plugins: [
-						'@emotion/babel-plugin',
-						'babel-plugin-macros',
-						[
-							'@emotion/babel-plugin-jsx-pragmatic',
-							{
-								export: 'jsx',
-								import: '__cssprop',
-								module: '@emotion/react',
-							},
-						],
-						['@babel/plugin-transform-react-jsx', {pragma: '__cssprop'}, 'twin.macro'],
-					],
-				},
-			})
-		);
-
 		config.plugins.push(
 			/** @see https://github.com/aleclarson/vite-tsconfig-paths */
 			tsconfigPaths({
@@ -78,3 +54,5 @@ module.exports = {
 		return config;
 	},
 };
+
+module.exports = config;

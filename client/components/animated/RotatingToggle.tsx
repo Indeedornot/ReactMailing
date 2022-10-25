@@ -2,9 +2,12 @@ import Square from '@/components/layout/Square';
 import React, {ButtonHTMLAttributes, useState, MouseEvent} from 'react';
 import {VscChevronDown} from 'react-icons/vsc';
 import {useSpring, animated} from 'react-spring';
-import {css} from '@emotion/react';
-import tw from 'twin.macro';
-import {Color} from '../../scripts/colorType';
+import {cx} from 'twind';
+
+const RotatingToggleStyles = {
+	Container: 'rounded-full p-0 m-0 h-full w-full flex  overflow-clip',
+	Icon: 'overflow-hidden flex justify-center items-center h-full w-full',
+};
 
 //TODO: Add Icon Sizing
 export default function RotatingToggle(props: RotatingToggleProps) {
@@ -36,7 +39,6 @@ export default function RotatingToggle(props: RotatingToggleProps) {
 			backgroundColor: on ? buttonColor.on : buttonColor.off,
 		},
 	});
-
 	const iconAnimation = useSpring({
 		from: {
 			color: on ? iconColor.off : iconColor.on,
@@ -51,14 +53,11 @@ export default function RotatingToggle(props: RotatingToggleProps) {
 		<Square>
 			{/*'btn rounded-circle p-0 m-0 h-100 w-100 d-flex'*/}
 			<animated.button
-				css={css`
-					${tw`rounded-full p-0 m-0 h-full w-full flex`}
-				`}
-				style={{overflow: 'clip', ...buttonAnimation}}
-				className={className}
+				style={{...buttonAnimation}}
+				className={cx(RotatingToggleStyles.Container, className)}
 				onClick={handleToggle}
 				{...atr}>
-				<animated.div className={'overflow-hidden flex justify-center items-center h-full w-full'} style={{...iconAnimation}}>
+				<animated.div className={RotatingToggleStyles.Icon} style={{...iconAnimation}}>
 					<VscChevronDown></VscChevronDown>
 				</animated.div>
 			</animated.button>
@@ -70,7 +69,7 @@ type RotatingToggleProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 	callback?: (parameter: boolean) => any;
 	initialState?: boolean;
 	//style
-	buttonColor?: {on?: Color; off?: Color};
-	iconColor?: {on?: Color; off?: Color};
+	buttonColor?: {on?: string; off?: string};
+	iconColor?: {on?: string; off?: string};
 	degrees?: {on?: number; off?: number};
 };

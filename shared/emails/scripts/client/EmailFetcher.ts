@@ -1,29 +1,37 @@
 import {EmailModel} from '../../models/EmailModel';
-import {faker} from '@faker-js/faker';
+import {ImapDataModel} from '@/shared/emails/models/ImapDataModel';
 
 /**
  * Fetches emails from the server.
- * @param startIndex The index of the first email to fetch. The first email has index 0. If fromLatest counts from the latest email.
- * @param stopIndex The index of the last email to fetch. If fromLatest counts from the latest email.
- * @param fromLatest Defaults to true
+ * @param startIndex The index of the first email to fetch. The first email has index 0
+ * @param stopIndex The index of the last email to fetch
+ * @param imapData The IMAP data to use to connect to the server
  */
-export async function fetchEmails(startIndex: number, stopIndex: number, fromLatest = true): Promise<EmailModel[]> {
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			const emails: EmailModel[] = [];
-			for (let i = startIndex; i < stopIndex; i++) {
-				emails.push({
-					id: faker.datatype.uuid(),
-					SenderEmail: faker.internet.email(),
-					Subject: faker.lorem.sentence(),
-					Body: faker.lorem.paragraphs(),
-					Date: faker.date.past().toString(),
-					SenderName: faker.name.fullName(),
-				});
-			}
-			resolve(emails);
-		}, 1000);
+export async function fetchEmails(
+	startIndex: number,
+	stopIndex: number,
+	imapData: ImapDataModel
+): Promise<EmailModel[]> {
+	console.log('fetchEmails', startIndex, stopIndex, imapData);
+	console.log(
+		'fetchEmails',
+		JSON.stringify({
+			startIndex,
+			stopIndex,
+			imapData,
+		})
+	);
+	return fetch('http://localhost:5000/getEmails', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			startIndex,
+			stopIndex,
+			imapData,
+		}),
+	}).then((emails) => {
+		return emails.json();
 	});
-	// const res = await fetch('http://localhost:5000/getEmails');
-	// return await res.json();
 }

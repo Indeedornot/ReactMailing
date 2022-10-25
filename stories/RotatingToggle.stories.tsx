@@ -1,8 +1,7 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {ComponentMeta} from '@storybook/react';
 
 import RotatingToggle from '../client/components/animated/RotatingToggle';
-import {Color} from '../client/scripts/colorType';
 
 const disabled = {
 	buttonColor: {

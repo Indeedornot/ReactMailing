@@ -1,9 +1,19 @@
 import React, {HTMLAttributes} from 'react';
-import tw, {css} from 'twin.macro';
 import {ToggleHeader} from '@/components/accordion/ToggleHeader';
 import {ButtonHeader} from '@/components/accordion/ButtonHeader';
-import cx from 'classnames';
 import useCollapse from 'react-collapsed';
+import {cx} from 'twind';
+
+const AccordionItemStyles = {
+	Header: {
+		Container: 'items-center w-full bg-primary transition text-font-primary',
+		ContainerRounded: 'first:rounded-t-lg px-5',
+	},
+	Body: {
+		Container: 'bg-primary text-font-primary w-full h-full',
+		ContainerRounded: 'last:rounded-b-lg px-5 py-2',
+	},
+};
 
 //TODO: Block AccordionItem from being used when animation is set to true
 export default function AccordionItem(props: AccordionItemProps) {
@@ -20,16 +30,12 @@ export default function AccordionItem(props: AccordionItemProps) {
 		defaultExpanded: open,
 	});
 
-	const getHeader = () => {
-		switch (headerType) {
-			case 'button':
-				return <ButtonHeader onClick={() => setExpanded((expanded) => !expanded)} header={header} />;
-			case 'toggle':
-				return (
-					<ToggleHeader header={header} initialState={open} onClick={() => setExpanded((expanded) => !expanded)} />
-				);
-		}
-	};
+	const Header =
+		headerType == 'button' ? (
+			<ButtonHeader onClick={() => setExpanded((expanded) => !expanded)} header={header} />
+		) : (
+			<ToggleHeader initialState={open} onClick={() => setExpanded((expanded) => !expanded)} header={header} />
+		);
 
 	// eslint-disable-next-line react/display-name
 	const AccordionHeader = React.forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>((props, ref) => {
@@ -37,17 +43,11 @@ export default function AccordionItem(props: AccordionItemProps) {
 		return (
 			<div
 				ref={ref}
-				css={css`
-					${!flush &&
-					css`
-						&:first-of-type {
-							${tw`rounded-t-lg`}
-						}
-
-						${tw`px-5`}
-					`}
-				`}
-				className={cx('items-center w-full bg-primary transition text-font-primary', className)}
+				className={cx(
+					AccordionItemStyles.Header.Container,
+					!flush && AccordionItemStyles.Header.ContainerRounded,
+					className
+				)}
 				{...atr}>
 				{children}
 			</div>
@@ -56,17 +56,7 @@ export default function AccordionItem(props: AccordionItemProps) {
 
 	const AccordionBody = ({children}: {children: React.ReactNode}) => {
 		return (
-			<div
-				css={css`
-					${!flush &&
-					css`
-						&:last-of-type {
-							${tw`rounded-b-lg`}
-						}
-						${tw`px-5 pt-2`}
-					`}
-				`}
-				className='bg-primary text-font-primary w-full h-full'>
+			<div className={cx(AccordionItemStyles.Body.Container, !flush && AccordionItemStyles.Body.ContainerRounded)}>
 				{children}
 			</div>
 		);
@@ -74,8 +64,8 @@ export default function AccordionItem(props: AccordionItemProps) {
 
 	return (
 		<div>
-			<AccordionHeader {...atr}>{getHeader()}</AccordionHeader>
-			<div  {...getCollapseProps()}>
+			<AccordionHeader {...atr}>{Header}</AccordionHeader>
+			<div {...getCollapseProps()}>
 				<AccordionBody>{children}</AccordionBody>
 			</div>
 		</div>
@@ -90,3 +80,5 @@ type AccordionItemProps = HTMLAttributes<HTMLDivElement> & {
 	flush?: boolean;
 	onToggle?: (isOpen: boolean) => void;
 };
+
+export const MemoAccordionItem = React.memo(AccordionItem);

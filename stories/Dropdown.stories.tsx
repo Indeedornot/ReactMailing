@@ -1,13 +1,8 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-
 import Dropdown from '../client/components/dropdown/Dropdown';
 import DropdownItem from '../client/components/dropdown/DropdownItem';
-import DropdownItemGroup from '../client/components/dropdown/DropdownItemGroup';
-import DropdownGroupHover from '../client/components/dropdown/DropdownGroupHover';
-import {PayloadAction} from '@reduxjs/toolkit';
-import {EmailModel, EmailModelSortArgs} from '../shared/emails/models/EmailModel';
-import {sort} from '../client/scripts/sort';
+import DropdownGroup from '../client/components/dropdown/DropdownGroup';
+import DropdownGroupParent from '../client/components/dropdown/DropdownGroupParent';
 
 export default {
 	title: 'Components/Dropdown',
@@ -74,8 +69,8 @@ const deconstructArray = (array: any[]) => {
 			const childArray = Object.values(array[i]);
 			items.push(
 				<DropdownItem parent={true}>
-					<DropdownGroupHover>{childArray[0]}</DropdownGroupHover>
-					<DropdownItemGroup>{deconstructArray(childArray.splice(1))}</DropdownItemGroup>
+					<DropdownGroupParent>{childArray[0]}</DropdownGroupParent>
+					<DropdownGroup>{deconstructArray(childArray.splice(1))}</DropdownGroup>
 				</DropdownItem>
 			);
 		}

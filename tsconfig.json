@@ -16,7 +16,7 @@
 		"isolatedModules": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
-		"jsxImportSource": "@emotion/react",
+		"jsxImportSource": "react",
 		"baseUrl": ".",
 		"paths": {
 			"@/styles/*": ["./client/styles/*"],
@@ -25,7 +25,7 @@
 			"@/shared/*": ["./shared/*"],
 			"@/client/*": ["./client/*"]
 		},
-		"types": ["vite/client", "@emotion/react/types/css-prop", "react/next", "react-dom/next"]
+		"types": ["vite/client", "react/next", "react-dom/next"]
 	},
 	"include": ["client", "server", "shared"],
 	"references": [{"path": "./tsconfig.node.json"}]

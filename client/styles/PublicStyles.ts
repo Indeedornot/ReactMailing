@@ -1,4 +1,4 @@
-import {css, styled} from 'twin.macro';
+import {css} from 'twind';
 
 export const buttonStyleless = css`
 	background: none;

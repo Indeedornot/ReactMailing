@@ -6,6 +6,7 @@ import fs from 'fs';
 
 import {createServer as createViteServer} from 'vite';
 import {getEmails} from '../shared/emails/scripts/server/EmailController';
+import {ImapDataModel} from '@/shared/emails/models/ImapDataModel';
 
 const PORT = process.env.PORT || 5000;
 
@@ -33,8 +34,11 @@ async function createServer(root = process.cwd()) {
 	// use vite's connect instance as middleware
 	app.use(viteServer.middlewares);
 
-	app.get('/getEmails', async (req, res) => {
-		res.json(await getEmails({from: -5, to: '*'}));
+	app.post('/getEmails', express.json(), async (req, res) => {
+		const {startIndex, stopIndex, imapData}: {startIndex: number; stopIndex: number; imapData: ImapDataModel} =
+			req.body;
+		const emails = await getEmails({from: startIndex, to: stopIndex}, imapData);
+		res.json(emails);
 	});
 
 	app.get('/api/v1', (req, res) => {
@@ -61,10 +65,11 @@ async function createServer(root = process.cwd()) {
 			// 4. render the app HTML. This assumes entry-server.js's exported `render`
 			//    function calls appropriate framework SSR APIs,
 			//    e.g. ReactDOMServer.renderToString()
-			const appHtml = await render();
+			const appHtml = render();
 
 			// 5. Inject the app-rendered HTML into the template.
-			const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+			let html = template.replace(`<!--ssr-body-->`, appHtml.body);
+			html = html.replace(`<!--ssr-head-->`, appHtml.head);
 
 			// 6. Send the rendered HTML back.
 			res.status(200).set({'Content-Type': 'text/html'}).end(html);
