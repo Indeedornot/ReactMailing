@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "composite": true,
+        "module": "CommonJS",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "paths": {
+            "@/shared/*": [
+                "../shared/*"
+            ],
+        },
+    },
+    "references": [
+        {
+            "path": "../shared/tsconfig.json"
+        }
+    ]
+}
