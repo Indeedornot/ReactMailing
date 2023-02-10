@@ -1,11 +1,10 @@
 import DropdownGroup from '@/components/dropdown/DropdownGroup';
 import React, {HTMLAttributes} from 'react';
-import cx from 'classnames';
 import './Dropdown.css';
 
-export default function Dropdown({children, header, className, ...atr}: DropdownProps) {
+export default function Dropdown({children, header}: DropdownProps) {
 	return (
-		<div className={cx('group inline-block z-[1]', className)} {...atr}>
+		<div className='group inline-block z-[1]'>
 			{header}
 			<DropdownGroup parent={true}>{children}</DropdownGroup>
 		</div>

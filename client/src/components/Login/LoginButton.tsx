@@ -4,12 +4,7 @@ import Modal from '@/components/modal/Modal';
 import {Toggle} from 'react-toggle-component';
 import cx from 'classnames';
 
-const LoginButtonStyles = {
-	button: 'h-6 w-44 bg-primary hover:bg-accent m-0 p-0 rounded-full text-font-primary',
-	modal: {
-		input: 'block w-full rounded-md h-25 mb-3',
-	},
-};
+const InputStyle = 'block w-full rounded-md h-25 mb-3';
 
 //TODO: Add error messages
 export function LoginButton({className}: {className?: string}) {
@@ -50,18 +45,15 @@ export function LoginButton({className}: {className?: string}) {
 				<Modal setIsOpen={setIsModalOpen} className='w-11/12 h-1/2 flex justify-self'>
 					<div className='w-full h-full flex flex-col justify-items-center bg-secondary rounded-md px-2.5 py-3.5'>
 						<form onSubmit={handleLogin}>
-							<input type='text' className={LoginButtonStyles.modal.input} placeholder='Email' name='username' />
-							<input type='password' className={LoginButtonStyles.modal.input} placeholder='Password' name='password' />
-							<input type='text' className={LoginButtonStyles.modal.input} placeholder='Imap Host' name='host' />
-							<input
-								type='number'
-								min='0'
-								className={LoginButtonStyles.modal.input}
-								placeholder='Imap Port'
-								name='port'
-							/>
+							<input type='text' className={InputStyle} placeholder='Email' name='username' />
+							<input type='password' className={InputStyle} placeholder='Password' name='password' />
+							<input type='text' className={InputStyle} placeholder='Imap Host' name='host' />
+							<input type='number' min='0' className={InputStyle} placeholder='Imap Port' name='port' />
 							<Toggle leftBackgroundColor='white' rightBackgroundColor='blue' name='tls' className='block' />
-							<input type='submit' className={LoginButtonStyles.button} />
+							<input
+								type='submit'
+								className='h-6 w-44 bg-primary hover:bg-accent m-0 p-0 rounded-full text-font-primary'
+							/>
 						</form>
 					</div>
 				</Modal>

@@ -6,22 +6,9 @@ import {MdRestartAlt} from 'react-icons/md';
 import React, {HTMLAttributes} from 'react';
 import cx from 'classnames';
 
-const EmailDisplayStyles = {
-	Container: 'h-full w-full flex flex-col',
-	Header: {
-		Container: 'grid grid-cols-12 w-full py-2 px-4 bg-primary border-b-2 border-accent text-font-primary',
-		Dropdown: 'flex self-center justify-self-center',
-		Restart: 'flex col-start-12 self-center justify-self-center w-fit',
-	},
-};
-export default function EmailDisplay({
-	refreshEmails,
-	sortEmails,
-	children,
-	flush = false,
-	className,
-	...atr
-}: EmailTabProps) {
+const ContainerStyle = 'h-full w-full flex flex-col';
+
+export default function EmailDisplay({refreshEmails, sortEmails, children, flush = false, className}: EmailTabProps) {
 	const sortBy = (by: keyof EmailModel) => {
 		sortEmails && sortEmails(by);
 	};
@@ -31,9 +18,9 @@ export default function EmailDisplay({
 
 	return (
 		<div className='h-full w-full flex flex-col'>
-			<div className={cx(EmailDisplayStyles.Container, !flush && 'rounded-t-lg', className)}>
-				<div className={cx(EmailDisplayStyles.Header.Container)}>
-					<div className={cx(EmailDisplayStyles.Header.Dropdown)}>
+			<div className={cx(ContainerStyle, !flush && 'rounded-t-lg', className)}>
+				<div className='grid grid-cols-12 w-full py-2 px-4 bg-primary border-b-2 border-accent text-font-primary'>
+					<div className='flex self-center justify-self-center'>
 						<Dropdown header={<FaSort />}>
 							<DropdownItem>
 								<button onClick={() => sortBy('SenderName')}>By Sender</button>
@@ -46,13 +33,12 @@ export default function EmailDisplay({
 							</DropdownItem>
 						</Dropdown>
 					</div>
-					<button className={EmailDisplayStyles.Header.Restart} onClick={() => refresh()}>
+					<button className='flex col-start-12 self-center justify-self-center w-fit' onClick={() => refresh()}>
 						<MdRestartAlt />
 					</button>
 				</div>
 				{children}
 			</div>
-			{/*<EmailList emails={emails} scrollbar={false} flush={true} className={`${!flush && `rounded-b-md`}`} />*/}
 		</div>
 	);
 }

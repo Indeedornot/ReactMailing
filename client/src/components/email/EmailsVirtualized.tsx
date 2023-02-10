@@ -18,28 +18,32 @@ const Footer = () => {
 };
 
 const VirtuosoStyle = `h-full w-full`;
+const MemoizedEmail = React.memo(Email);
+const getMemoizedEmail = (index: number, email: EmailModel) => {
+	return <MemoizedEmail email={email}></MemoizedEmail>;
+};
 
 export default function EmailsVirtualized({
 	emails,
 	loadNextPage,
 	scrollbar = false,
 	className,
-	...atr
 }: EmailsVirtualizedProps) {
 	const loadMore = (index: number) => {
 		return loadNextPage(index);
 	};
 
-	const MemoizedEmail = React.memo(Email);
 	return (
 		<Virtuoso
 			className={cx(VirtuosoStyle, !scrollbar && 'scrollbar_hidden', className)}
 			data={emails}
 			endReached={loadMore}
 			overscan={25}
-			itemContent={(index, email) => {
-				return <MemoizedEmail email={email} flush={true}></MemoizedEmail>;
-			}}></Virtuoso>
+			itemContent={getMemoizedEmail}
+			components={{
+				Footer,
+			}}
+		/>
 	);
 }
 
