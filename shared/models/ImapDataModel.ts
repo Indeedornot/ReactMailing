@@ -1,26 +1,22 @@
+import { z } from "zod";
+
 export type ImapDataModel = {
-	username: string;
-	password: string;
-	host: string;
-	port: number;
-	tls: boolean;
+  username: string;
+  password: string;
+  host: string;
+  port: number;
+  tls: boolean;
 };
 
-export const isValidImapData = (model: ImapDataModel) => {
-	return (
-		ValidateEmail(model.username) &&
-		model.password !== undefined &&
-		model.password !== '' &&
-		model.host !== undefined &&
-		model.port !== undefined &&
-		model.port > 0 &&
-		model.tls !== undefined
-	);
-};
+export const ImapDataSchema = z.object({
+  username: z.string().email(),
+  password: z.string(),
+  host: z.string(),
+  port: z.number().positive(),
+  tls: z.boolean(),
+});
 
-const re =
-	/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-export const ValidateEmail = (email: string | undefined) => {
-	if (email === undefined || email === '') return false;
-	return re.test(email.toLowerCase());
+export const isValidImapData = (imapData: any): imapData is ImapDataModel => {
+  const parseData = ImapDataSchema.safeParse(imapData);
+  return parseData.success;
 };
