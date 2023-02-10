@@ -647,3 +647,5 @@ shared/emails/scripts/server/PrivateCredentials.ts
 pnpm-lock.yaml
 /pnpm-lock.yaml
 stories/sample/
+
+.vscode/
