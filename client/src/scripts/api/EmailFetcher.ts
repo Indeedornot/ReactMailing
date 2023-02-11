@@ -1,5 +1,6 @@
 import {EmailModel} from '@/shared/models/EmailModel';
 import {ImapDataModel} from '@/shared/models/ImapDataModel';
+import {SequenceSet} from '../../../../server/SequenceSet';
 
 /**
  * Fetches emails from the server.
@@ -8,17 +9,13 @@ import {ImapDataModel} from '@/shared/models/ImapDataModel';
  * @param imapData The IMAP data to use to connect to the server
  * @returns The fetched emails
  */
-export async function fetchEmailsApi(
-	startIndex: number,
-	stopIndex: number,
-	imapData: ImapDataModel
-): Promise<EmailModel[]> {
-	console.log('fetchEmails', startIndex, stopIndex, imapData);
+export async function fetchEmailsApi(sequenceSet: SequenceSet, imapData: ImapDataModel): Promise<EmailModel[]> {
+	console.log('fetchEmails', sequenceSet.from, sequenceSet.to, imapData);
 	console.log(
 		'fetchEmails',
 		JSON.stringify({
-			startIndex,
-			stopIndex,
+			startIndex: sequenceSet.from,
+			stopIndex: sequenceSet.to,
 			imapData,
 		})
 	);
@@ -28,8 +25,8 @@ export async function fetchEmailsApi(
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			startIndex,
-			stopIndex,
+			startIndex: sequenceSet.from,
+			stopIndex: sequenceSet.to,
 			imapData,
 		}),
 	}).then((emails) => {
@@ -45,5 +42,12 @@ export async function fetchEmailsApi(
  * @returns The fetched emails
  */
 export async function fetchEmails(from: number, emailCount: number, imapData: ImapDataModel): Promise<EmailModel[]> {
-	return fetchEmailsApi(-from, -(from + emailCount), imapData);
+	const startIndex = from == 0 ? '*' : -from;
+	return fetchEmailsApi(
+		{
+			from: startIndex,
+			to: -(from + emailCount),
+		},
+		imapData
+	);
 }
