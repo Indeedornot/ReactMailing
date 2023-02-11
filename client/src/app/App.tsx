@@ -8,6 +8,7 @@ import {sort} from '@/scripts/helpers/sort';
 import EmailsVirtualized from '@/components/email/EmailsVirtualized';
 import {ThemeToggle} from '@/components/theme/ThemeToggle';
 import {ImapDataModel, isValidImapData} from '@/shared/models/ImapDataModel';
+import {getImapData, setImapData, clearImapData} from '@/scripts/client/ImapData';
 import {LoginButton} from '@/components/Login/LoginButton';
 
 export default function App() {
@@ -15,11 +16,6 @@ export default function App() {
 	//	const [sortedBy, setSortedBy] = useState<EmailModelSortArgs>('Date');
 	const chunkSize = 21;
 	const [isFetching, setIsFetching] = useState(false);
-
-	const getImapData = () => {
-		const imapData = JSON.parse(localStorage.getItem('imapData') || '{}') as ImapDataModel;
-		return isValidImapData(imapData) ? imapData : null;
-	};
 
 	const getEmails = () => {
 		if (isFetching) return;
@@ -42,6 +38,8 @@ export default function App() {
 
 	const refreshEmails = () => {
 		setEmails([]);
+		//watchout, due to them being cached, it will not apply
+		//coming from sampleData does not work, fetching from -21, rather than 0
 		getEmails();
 	};
 

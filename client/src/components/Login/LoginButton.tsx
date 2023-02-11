@@ -3,6 +3,7 @@ import {ImapDataModel, isValidImapData} from '@/shared/models/ImapDataModel';
 import Modal from '@/components/modal/Modal';
 import {Toggle} from 'react-toggle-component';
 import cx from 'classnames';
+import {setImapData} from '../../scripts/client/ImapData';
 
 const InputStyle = 'block w-full rounded-md h-25 mb-3';
 
@@ -16,15 +17,16 @@ export function LoginButton({className}: {className?: string}) {
 		const target = event.target as typeof event.target & ImapInputType;
 		const imapData: ImapDataModel = {
 			host: target.host.value,
-			port: target.port.value,
+			port: parseInt(target.port.value),
 			username: target.username.value,
 			password: target.password.value,
 			tls: target.tls.checked,
 		};
-		if (!isValidImapData(imapData)) return;
+		const success = setImapData(imapData);
+		if (!success) return;
+
 		setIsLoggedIn(true);
 		setIsModalOpen(false);
-		localStorage.setItem('imapData', JSON.stringify(imapData));
 	};
 
 	return (
@@ -64,7 +66,7 @@ export function LoginButton({className}: {className?: string}) {
 
 type ImapInputType = {
 	host: {value: string};
-	port: {value: number};
+	port: {value: string};
 	username: {value: string};
 	password: {value: string};
 	tls: {checked: boolean};
