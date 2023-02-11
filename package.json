@@ -4,9 +4,16 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"npm start --prefix server\" \"npm run dev --prefix client\""
+    "dev": "concurrently \"npm start --prefix server\" \"npm run dev --prefix client\"",
+    "lint": "npm run lint --prefix client && npm run lint --prefix server && npm run lint --prefix shared"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }

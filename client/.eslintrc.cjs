@@ -15,8 +15,6 @@ module.exports = {
 	},
 	env: {
 		browser: true,
-		amd: true,
-		node: true,
 	},
 	extends: [
 		'eslint:recommended',
@@ -33,6 +31,7 @@ module.exports = {
 		'react/no-unescaped-entities': 'warn',
 		'react/jsx-curly-brace-presence': [2, {props: 'never', children: 'never', propElementValues: 'always'}],
 		'prefer-const': 'error',
+		eqeqeq: ['error', 'always'],
 	},
 };
 
