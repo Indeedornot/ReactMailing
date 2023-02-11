@@ -14,4 +14,3 @@ const MainEntry = () => {
 };
 
 createRoot(container).render(<MainEntry />);
-

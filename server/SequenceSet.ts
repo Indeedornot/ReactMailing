@@ -1,4 +1,4 @@
-export type SequenceSet = { from: number | "*"; to: number | "*" };
+export type SequenceSet = {from: number | '*'; to: number | '*'};
 
 /**
  *  all possible cases
@@ -27,67 +27,64 @@ export type SequenceSet = { from: number | "*"; to: number | "*" };
  */
 //handles *:*, 1:1, -1:-1
 
-export const expandSequenceSet = (
-  sequenceSet: SequenceSet,
-  maxValue: number
-) => {
-  const { from, to } = sequenceSet;
+export const expandSequenceSet = (sequenceSet: SequenceSet, maxValue: number) => {
+	const {from, to} = sequenceSet;
 
-  if (from == "*" && to == "*") {
-    return `${maxValue}`;
-  }
+	if (from === '*' && to === '*') {
+		return `${maxValue}`;
+	}
 
-  if (from == "*" || to == "*") {
-    const notStar = (from == "*" ? to : from) as number;
+	if (from === '*' || to === '*') {
+		const notStar = (from === '*' ? to : from) as number;
 
-    if (notStar > 0) {
-      return `${notStar}:${maxValue}`;
-    }
+		if (notStar > 0) {
+			return `${notStar}:${maxValue}`;
+		}
 
-    return `${maxValue + notStar}:${maxValue}`;
-  }
+		return `${maxValue + notStar}:${maxValue}`;
+	}
 
-  //1:1, -1:-1, 0:0
-  if (from == to) {
-    if (from < 0) {
-      return `${maxValue + from}`;
-    }
+	//1:1, -1:-1, 0:0
+	if (from === to) {
+		if (from < 0) {
+			return `${maxValue + from}`;
+		}
 
-    return `${from}`;
-  }
+		return `${from}`;
+	}
 
-  //1:1, -1:-1
-  if (from * to > 0) {
-    const min = Math.min(from, to);
-    const max = Math.max(from, to);
+	//1:1, -1:-1
+	if (from * to > 0) {
+		const min = Math.min(from, to);
+		const max = Math.max(from, to);
 
-    if (min < 0) {
-      return `${maxValue + min}:${maxValue + max}`;
-    }
+		if (min < 0) {
+			return `${maxValue + min}:${maxValue + max}`;
+		}
 
-    return `${min}:${max}`;
-  }
+		return `${min}:${max}`;
+	}
 
-  //1:-1, -1:1
-  if (from * to < 0) {
-    const min = Math.min(from, to); //min is always negative
-    const max = Math.max(from, to); //max is always positive
+	//1:-1, -1:1
+	if (from * to < 0) {
+		const min = Math.min(from, to); //min is always negative
+		const max = Math.max(from, to); //max is always positive
 
-    if (maxValue + min == max) {
-      return `${max}`;
-    }
+		if (maxValue + min === max) {
+			return `${max}`;
+		}
 
-    return `${max}:${maxValue + min}`;
-  }
+		return `${max}:${maxValue + min}`;
+	}
 
-  //0:1, 0:-1
-  if (from * to == 0) {
-    const notZero = from == 0 ? to : from;
+	//0:1, 0:-1
+	if (from * to === 0) {
+		const notZero = from === 0 ? to : from;
 
-    if (notZero > 0) {
-      return `0:${notZero}`;
-    }
+		if (notZero > 0) {
+			return `0:${notZero}`;
+		}
 
-    return `0:${maxValue + notZero}`;
-  }
+		return `0:${maxValue + notZero}`;
+	}
 };

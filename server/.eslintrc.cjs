@@ -9,7 +9,7 @@ module.exports = {
 	rules: {
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'prefer-const': 'error',
-		eqeqeq: ['error', 'always'],
+		eqeqeq: ['error', 'smart'],
 	},
 };
 

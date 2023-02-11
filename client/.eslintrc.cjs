@@ -31,7 +31,7 @@ module.exports = {
 		'react/no-unescaped-entities': 'warn',
 		'react/jsx-curly-brace-presence': [2, {props: 'never', children: 'never', propElementValues: 'always'}],
 		'prefer-const': 'error',
-		eqeqeq: ['error', 'always'],
+		eqeqeq: ['error', 'smart'],
 	},
 };
 

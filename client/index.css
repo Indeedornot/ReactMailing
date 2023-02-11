@@ -1,45 +1,45 @@
 :root {
-  --color-primary: 255 255 255;
-  --color-secondary: 220 220 220;
-  --color-accent: 216 216 216;
-  --color-text-primary: 0 0 0;
-  --color-text-secondary: 69 69 69;
+	--color-primary: 255 255 255;
+	--color-secondary: 220 220 220;
+	--color-accent: 216 216 216;
+	--color-text-primary: 0 0 0;
+	--color-text-secondary: 69 69 69;
 }
 
 .dark {
-  --color-primary: 28 28 28;
-  --color-secondary: 34 34 34;
-  --color-accent: 33 33 33;
-  --color-text-primary: 255 255 255;
-  --color-text-secondary: 188 188 188;
+	--color-primary: 28 28 28;
+	--color-secondary: 34 34 34;
+	--color-accent: 33 33 33;
+	--color-text-primary: 255 255 255;
+	--color-text-secondary: 188 188 188;
 }
 
 body {
-  background-color: #262626;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+	background-color: #262626;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
 }
 
 .index_container {
-  width: 390px;
-  height: 844px;
-  position: relative
+	width: 390px;
+	height: 844px;
+	position: relative;
 }
 
 #modal_root {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
 }
 
 #root {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
 }

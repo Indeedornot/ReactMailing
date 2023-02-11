@@ -42,7 +42,7 @@ export async function fetchEmailsApi(sequenceSet: SequenceSet, imapData: ImapDat
  * @returns The fetched emails
  */
 export async function fetchEmails(from: number, emailCount: number, imapData: ImapDataModel): Promise<EmailModel[]> {
-	const startIndex = from == 0 ? '*' : -from;
+	const startIndex = from === 0 ? '*' : -from;
 	return fetchEmailsApi(
 		{
 			from: startIndex,
