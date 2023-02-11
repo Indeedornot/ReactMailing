@@ -27,11 +27,8 @@ export default function App() {
 		const imapData = getImapData();
 		if (!imapData) return;
 
-		const start = emails.length;
-		const end = start + chunkSize;
-
 		setIsFetching(true);
-		fetchEmails(-end, -start, imapData)
+		fetchEmails(emails.length, chunkSize, imapData)
 			.then((fetchedEmails) => {
 				console.log(fetchedEmails.length + emails.length);
 				setEmails((emails) => [...emails, ...fetchedEmails]);

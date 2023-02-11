@@ -2,16 +2,17 @@ import { ImapFlow } from "imapflow";
 import { EmailModel } from "@/shared/models/EmailModel";
 import { simpleParser } from "mailparser";
 import { ImapDataModel } from "@/shared/models/ImapDataModel";
+import { SequenceSet } from "SequenceSet";
+import { expandSequenceSet } from "./SequenceSet";
 
 //useful
 //https://afterlogic.com/mailbee-net/docs/MailBee.ImapMail.SystemMessageFlags.html
 
 export async function getEmails(
-  args: SequenceSet,
+  sequenceSet: SequenceSet,
   imapData: ImapDataModel
 ): Promise<EmailModel[]> {
   const emails: EmailModel[] = [];
-
   const client = new ImapFlow({
     host: imapData.host,
     port: imapData.port,
@@ -30,20 +31,18 @@ export async function getEmails(
   try {
     const lock = await client.getMailboxLock("INBOX");
     try {
-      if (args.from < 0) {
-        if (typeof client.mailbox === "boolean") return [];
-        const messageCount = client.mailbox.exists;
-        args.from = messageCount + args.from;
-      }
-      if (args.to <= 0) {
-        if (typeof client.mailbox === "boolean") return [];
-        const messageCount = client.mailbox.exists;
-        args.to = messageCount + args.to;
-      }
+      // If mailbox is not open, return;
+      if (typeof client.mailbox === "boolean") return [];
 
-      console.log("args", args);
+      const messageCount = client.mailbox.exists;
+      const range = expandSequenceSet(sequenceSet, messageCount);
+
+      console.log("args", sequenceSet);
       //let messages = client.fetch(`${from}:${to}`, {uid: true, envelope: true, bodyStructure: true, headers: true, bodyParts: ['']});
-      const messages = client.fetch(`${args.from}:${args.to}`, { uid: true });
+      const messages = client.fetch(range, {
+        uid: true,
+      });
+
       const seqs: number[] = [];
       for await (const message of messages) {
         seqs.push(message.seq);
@@ -74,5 +73,3 @@ export async function getEmails(
     return [];
   }
 }
-
-type SequenceSet = { from: number; to: number };
