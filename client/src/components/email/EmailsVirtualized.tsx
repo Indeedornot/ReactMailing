@@ -1,4 +1,4 @@
-import React, {HTMLAttributes} from 'react';
+import React from 'react';
 import {EmailModel} from '@/shared/models/EmailModel';
 import {Virtuoso} from 'react-virtuoso';
 import Email from './Email';
@@ -23,21 +23,12 @@ const getMemoizedEmail = (index: number, email: EmailModel) => {
 	return <MemoizedEmail email={email}></MemoizedEmail>;
 };
 
-export default function EmailsVirtualized({
-	emails,
-	loadNextPage,
-	scrollbar = false,
-	className,
-}: EmailsVirtualizedProps) {
-	const loadMore = (index: number) => {
-		return loadNextPage(index);
-	};
-
+export default function EmailsVirtualized({emails, loadNextPage, scrollbar = false}: EmailsVirtualizedProps) {
 	return (
 		<Virtuoso
-			className={cx(VirtuosoStyle, !scrollbar && 'scrollbar_hidden', className)}
+			className={cx(VirtuosoStyle, !scrollbar && 'scrollbar_hidden')}
 			data={emails}
-			endReached={loadMore}
+			endReached={loadNextPage}
 			overscan={25}
 			itemContent={getMemoizedEmail}
 			components={{
@@ -47,7 +38,7 @@ export default function EmailsVirtualized({
 	);
 }
 
-type EmailsVirtualizedProps = HTMLAttributes<HTMLDivElement> & {
+type EmailsVirtualizedProps = {
 	// Array of items loaded so far.
 	emails: EmailModel[];
 	// Callback function responsible for loading the next page of items.

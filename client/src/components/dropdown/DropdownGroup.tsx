@@ -1,4 +1,4 @@
-import React, {HTMLAttributes} from 'react';
+import React from 'react';
 import cx from 'classnames';
 
 const DropdownItemGroupStyles = {
@@ -19,7 +19,7 @@ export default function DropdownGroup({children, parent = false}: DropdownItemGr
 	);
 }
 
-type DropdownItemGroupProps = HTMLAttributes<HTMLUListElement> & {
+type DropdownItemGroupProps = {
 	children: React.ReactNode;
 	parent?: boolean;
 };

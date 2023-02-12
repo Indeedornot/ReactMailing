@@ -11,7 +11,7 @@ export default function DropdownItem({children, parent = false, ...atr}: Dropdow
 	);
 }
 
-type DropdownProps = HTMLAttributes<HTMLLIElement> & {
+type DropdownProps = {
 	children: React.ReactNode;
 	parent?: boolean;
 };

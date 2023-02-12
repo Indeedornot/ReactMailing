@@ -1,5 +1,5 @@
 import DropdownGroup from '@/components/dropdown/DropdownGroup';
-import React, {HTMLAttributes} from 'react';
+import React from 'react';
 import './Dropdown.css';
 
 export default function Dropdown({children, header}: DropdownProps) {
@@ -11,7 +11,7 @@ export default function Dropdown({children, header}: DropdownProps) {
 	);
 }
 
-type DropdownProps = HTMLAttributes<HTMLDivElement> & {
+type DropdownProps = {
 	children: React.ReactNode;
 	header: React.ReactNode;
 };

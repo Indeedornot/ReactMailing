@@ -1,16 +1,16 @@
 import {FaMoon, FaSun} from 'react-icons/fa';
 import React from 'react';
+import {useMutationObservable} from '../../scripts/client/MutationObserverHook';
 
 export function ThemeToggle() {
 	const [darkMode, setDarkMode] = React.useState(false);
 
-	React.useEffect(() => {
-		if (window.window !== undefined && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			document.body.classList.add('dark');
-			setDarkMode(true);
-		}
-		return setDarkMode(false);
-	}, []);
+	const documentClassChanged = () => {
+		const darkMode = document.body.classList.contains('dark');
+		setDarkMode(darkMode);
+	};
+
+	useMutationObservable(document.body, documentClassChanged, {config: {attributes: true, attributeFilter: ['class']}});
 
 	const toggleDarkMode = () => {
 		setDarkMode((mode) => !mode);

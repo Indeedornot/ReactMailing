@@ -2,7 +2,7 @@ import {EmailModel} from '@/shared/models/EmailModel';
 import AccordionItem from '@/components/accordion/AccordionItem';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import React, {HTMLAttributes} from 'react';
+import React from 'react';
 import cx from 'classnames';
 
 dayjs.extend(relativeTime);
@@ -64,7 +64,7 @@ export default function Email({email, onToggle}: EmailProps) {
 	);
 }
 
-type EmailProps = HTMLAttributes<HTMLDivElement> & {
+type EmailProps = {
 	email: EmailModel;
 	onToggle?: (isOpen: boolean) => void;
 };

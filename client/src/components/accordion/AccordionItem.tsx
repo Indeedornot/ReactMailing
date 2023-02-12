@@ -1,9 +1,9 @@
-import React, {HTMLAttributes} from 'react';
+import React from 'react';
 import {ButtonHeader} from '@/components/accordion/ButtonHeader';
 import useCollapse from 'react-collapsed';
 
 export default function AccordionItem(props: AccordionItemProps) {
-	const {children, header, open = false, onToggle} = props;
+	const {children, header, open = false, onToggle, className} = props;
 
 	const {getCollapseProps, setExpanded} = useCollapse({
 		duration: 300,
@@ -17,7 +17,7 @@ export default function AccordionItem(props: AccordionItemProps) {
 	});
 
 	return (
-		<div>
+		<div className={className}>
 			<div className='items-center w-full bg-primary transition text-font-primary'>
 				<ButtonHeader onClick={() => setExpanded((expanded) => !expanded)} header={header} />
 			</div>
@@ -28,11 +28,10 @@ export default function AccordionItem(props: AccordionItemProps) {
 	);
 }
 
-type AccordionItemProps = HTMLAttributes<HTMLDivElement> & {
+type AccordionItemProps = {
 	children: React.ReactNode;
 	header: React.ReactNode;
 	open?: boolean;
 	onToggle?: (isOpen: boolean) => void;
+	className?: string;
 };
-
-export const MemoAccordionItem = React.memo(AccordionItem);

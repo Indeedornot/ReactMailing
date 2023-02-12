@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ImapDataModel, isValidImapData} from '@/shared/models/ImapDataModel';
+import {ImapDataModel} from '@/shared/models/ImapDataModel';
 import Modal from '@/components/modal/Modal';
 import {Toggle} from 'react-toggle-component';
 import cx from 'classnames';
