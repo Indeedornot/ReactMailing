@@ -2,8 +2,7 @@ import {ImapFlow} from 'imapflow';
 import {EmailModel} from '@/shared/models/EmailModel';
 import {simpleParser} from 'mailparser';
 import {ImapDataModel} from '@/shared/models/ImapDataModel';
-import {SequenceSet} from 'SequenceSet';
-import {expandSequenceSet} from './SequenceSet';
+import {SequenceSet, expandSequenceSet} from '@/shared/models/SequenceSet';
 
 //useful
 //https://afterlogic.com/mailbee-net/docs/MailBee.ImapMail.SystemMessageFlags.html
