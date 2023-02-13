@@ -23,11 +23,11 @@ export const ImapDataProvider = ({children}: {children: ReactNode}) => {
 		imapData !== null ? setIsLoggedIn(true) : setIsLoggedIn(false);
 	}, [imapData]);
 
-	const setImapData = (imapData: ImapDataModel) => {
-		if (!isValidImapData(imapData)) return false;
+	const setImapData = (newImapData: ImapDataModel) => {
+		if (!isValidImapData(newImapData)) return false;
 
-		internalSetImapData(imapData);
-		localStorage.setItem('imapData', JSON.stringify(imapData));
+		internalSetImapData(newImapData);
+		localStorage.setItem('imapData', JSON.stringify(newImapData));
 		return true;
 	};
 
