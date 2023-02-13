@@ -4,6 +4,7 @@ import './globalStyles.css';
 import App from './app/App';
 import {setDefaultTheme} from './scripts/client/Theme';
 import {ImapDataProvider} from './context/ImapDataContext';
+import {EmailProvider} from './context/EmailsContext';
 
 setDefaultTheme();
 
@@ -13,7 +14,9 @@ const MainEntry = () => {
 	return (
 		<React.StrictMode>
 			<ImapDataProvider>
-				<App />
+				<EmailProvider>
+					<App />
+				</EmailProvider>
 			</ImapDataProvider>
 		</React.StrictMode>
 	);

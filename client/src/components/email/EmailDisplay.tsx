@@ -3,13 +3,14 @@ import Dropdown from '@/components/dropdown/Dropdown';
 import {FaSort} from 'react-icons/fa';
 import DropdownItem from '@/components/dropdown/DropdownItem';
 import {MdRestartAlt} from 'react-icons/md';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import EmailsVirtualized from './EmailsVirtualized';
+import {EmailContext} from '@/context/EmailsContext';
 
-export default function EmailDisplay({refreshEmails, sortEmails, loadNextPage, isFetching, emails}: EmailTabProps) {
-	const sortBy = (by: keyof EmailModel) => {
-		sortEmails && sortEmails(by);
-	};
+export default function EmailDisplay() {
+	const {emails, loadNextPage, isFetching, refreshEmails} = useContext(EmailContext);
+
+	const sortBy = (by: keyof EmailModel) => {};
 
 	const [showList, setShowList] = useState(false);
 
@@ -44,11 +45,3 @@ export default function EmailDisplay({refreshEmails, sortEmails, loadNextPage, i
 		</div>
 	);
 }
-
-type EmailTabProps = {
-	refreshEmails?: () => void;
-	sortEmails?: (sortType: keyof EmailModel) => void;
-	loadNextPage: () => void;
-	isFetching: boolean;
-	emails: EmailModel[];
-};

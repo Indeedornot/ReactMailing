@@ -3,6 +3,7 @@ import {EmailModel} from '@/shared/models/EmailModel';
 import {Virtuoso} from 'react-virtuoso';
 import Email from './Email';
 import cx from 'classnames';
+import {emailsPerPage} from '@/context/EmailsContext';
 
 const Footer = () => {
 	return (
@@ -29,7 +30,7 @@ export default function EmailsVirtualized({emails, loadNextPage, scrollbar = fal
 			className={cx(VirtuosoStyle, !scrollbar && 'scrollbar_hidden')}
 			data={emails}
 			endReached={loadNextPage}
-			overscan={25}
+			overscan={emailsPerPage}
 			itemContent={getMemoizedEmail}
 			components={{
 				Footer,

@@ -3,45 +3,14 @@ import {useContext, useState} from 'react';
 import EmailDisplay from '@/components/email/EmailDisplay';
 import {fetchEmails} from '@/scripts/api/EmailFetcher';
 
-import {EmailModel, EmailModelSortArgs, SampleData} from '@/shared/models/EmailModel';
+import {EmailModel, EmailModelSortArgs, } from '@/shared/models/EmailModel';
 import {sort} from '@/scripts/helpers/sort';
 import {ThemeToggle} from '@/components/theme/ThemeToggle';
 import {LoginButton} from '@/components/Login/LoginButton';
 import {ImapDataContext} from '@/context/ImapDataContext';
 
 export default function App() {
-	const [emails, setEmails] = useState<EmailModel[]>(SampleData);
 	//	const [sortedBy, setSortedBy] = useState<EmailModelSortArgs>('Date');
-	const chunkSize = 21;
-	const [isFetching, setIsFetching] = useState(false);
-
-	const imapDataContext = useContext(ImapDataContext);
-
-	const getEmails = () => {
-		if (isFetching) return;
-
-		const imapData = imapDataContext.imapData;
-		if (!imapData) return;
-
-		setIsFetching(true);
-		fetchEmails(emails.length, chunkSize, imapData)
-			.then((fetchedEmails) => {
-				console.log(fetchedEmails.length + emails.length);
-				setEmails((emails) => [...emails, ...fetchedEmails]);
-				setIsFetching(false);
-			})
-			.catch((err) => {
-				console.error(err);
-				setIsFetching(false);
-			});
-	};
-
-	const refreshEmails = () => {
-		setEmails([]);
-		//watchout, due to them being cached, it will not apply
-		//coming from sampleData does not work, fetching from -21, rather than 0
-		getEmails();
-	};
 
 	// const sortEmailsBy = (by: keyof EmailModel) => {
 	// 	const sortBy: EmailModelSortArgs = sortedBy === by ? `-${by}` : by;
@@ -66,7 +35,7 @@ export default function App() {
 			</div>
 			{/* Body */}
 			<div className='flex-grow'>
-				<EmailDisplay refreshEmails={refreshEmails} emails={emails} loadNextPage={getEmails} isFetching={isFetching} />
+				<EmailDisplay />
 			</div>
 		</div>
 	);
