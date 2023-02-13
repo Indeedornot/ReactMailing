@@ -11,7 +11,7 @@ type Options = {
  * @param cb callback that will run when there's a change in targetEl or any
  * child element (depending on the provided options)
  * @param options
- * @param options.config check \[options\](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/observe)
+ * @param options.config check [options](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/observe)
  */
 export const useMutationObservable = (targetEl: HTMLElement, cb: MutationCallback, options: Options) => {
 	const [observer, setObserver] = useState<MutationObserver | null>(null);
