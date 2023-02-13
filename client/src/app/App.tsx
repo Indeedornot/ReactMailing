@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useContext, useState} from 'react';
 
 import EmailDisplay from '@/components/email/EmailDisplay';
 import {fetchEmails} from '@/scripts/api/EmailFetcher';
@@ -6,9 +6,8 @@ import {fetchEmails} from '@/scripts/api/EmailFetcher';
 import {EmailModel, EmailModelSortArgs, SampleData} from '@/shared/models/EmailModel';
 import {sort} from '@/scripts/helpers/sort';
 import {ThemeToggle} from '@/components/theme/ThemeToggle';
-import {ImapDataModel, isValidImapData} from '@/shared/models/ImapDataModel';
-import {getImapData, setImapData, clearImapData} from '@/scripts/client/ImapData';
 import {LoginButton} from '@/components/Login/LoginButton';
+import {ImapDataContext} from '@/context/ImapDataContext';
 
 export default function App() {
 	const [emails, setEmails] = useState<EmailModel[]>(SampleData);
@@ -16,10 +15,12 @@ export default function App() {
 	const chunkSize = 21;
 	const [isFetching, setIsFetching] = useState(false);
 
+	const imapDataContext = useContext(ImapDataContext);
+
 	const getEmails = () => {
 		if (isFetching) return;
 
-		const imapData = getImapData();
+		const imapData = imapDataContext.imapData;
 		if (!imapData) return;
 
 		setIsFetching(true);

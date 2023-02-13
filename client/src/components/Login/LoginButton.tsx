@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {ImapDataModel} from '@/shared/models/ImapDataModel';
 import Modal from '@/components/modal/Modal';
 import {Toggle} from 'react-toggle-component';
 import cx from 'classnames';
-import {setImapData} from '../../scripts/client/ImapData';
+import {ImapDataContext} from '@/context/ImapDataContext';
 
 const InputStyle = 'block w-full rounded-md h-25 mb-3';
 
 //TODO: Add error messages
 export function LoginButton({className}: {className?: string}) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	const {isLoggedIn, setImapData, deleteImapData} = useContext(ImapDataContext);
 
 	const handleLogin = (event: React.SyntheticEvent) => {
 		event.preventDefault();
@@ -25,7 +26,6 @@ export function LoginButton({className}: {className?: string}) {
 		const success = setImapData(imapData);
 		if (!success) return;
 
-		setIsLoggedIn(true);
 		setIsModalOpen(false);
 	};
 
@@ -35,11 +35,11 @@ export function LoginButton({className}: {className?: string}) {
 				className={cx(className)}
 				onClick={() => {
 					if (isLoggedIn) {
-						localStorage.removeItem('imapData');
-						setIsLoggedIn(false);
-					} else {
-						setIsModalOpen(true);
+						deleteImapData();
+						return;
 					}
+
+					setIsModalOpen(true);
 				}}>
 				{isLoggedIn ? 'Logout' : 'Login'}
 			</button>
