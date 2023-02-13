@@ -19,7 +19,8 @@
 		"paths": {
 			"@/components/*": ["./src/components/*"],
 			"@/scripts/*": ["./src/scripts/*"],
-			"@/shared/*": ["../shared/*"]
+			"@/shared/*": ["../shared/*"],
+			"@/context/*": ["./src/context/*"]
 		}
 	},
 	"include": ["src"],

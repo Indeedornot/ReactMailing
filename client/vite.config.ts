@@ -2,6 +2,13 @@ import react from '@vitejs/plugin-react';
 import {defineConfig} from 'vite';
 import path from 'path';
 
+const aliasPath = (relativePath: string, alias: string) => {
+	return {
+		find: alias,
+		replacement: path.resolve(__dirname, relativePath),
+	};
+};
+
 // https://vitejs.dev/config/
 export default defineConfig({
 	optimizeDeps: {
@@ -16,12 +23,10 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: [
-			{
-				find: '@/components',
-				replacement: path.resolve(__dirname, 'src/components'),
-			},
-			{find: '@/shared', replacement: path.resolve(__dirname).replace('client', 'shared')},
-			{find: '@/scripts', replacement: path.resolve(__dirname, 'src/scripts')},
+			aliasPath('src/components', '@/components'),
+			aliasPath('../shared', '@/shared'),
+			aliasPath('src/scripts', '@/scripts'),
+			aliasPath('src/context', '@/context'),
 		],
 	},
 	server: {port: 3000},
