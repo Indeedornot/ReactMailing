@@ -1,4 +1,4 @@
-import {EmailModel, EmailModelSortArgs} from '@/shared/models/EmailModel';
+import {EmailModelSortArgs} from '@/shared/models/EmailModel';
 import Dropdown from '@/components/dropdown/Dropdown';
 import {FaSort} from 'react-icons/fa';
 import DropdownItem from '@/components/dropdown/DropdownItem';
