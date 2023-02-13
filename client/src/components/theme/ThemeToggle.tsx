@@ -1,27 +1,15 @@
 import {FaMoon, FaSun} from 'react-icons/fa';
-import {useCallback, useState} from 'react';
-import {useMutationObservable} from '@/scripts/client/MutationObserverHook';
-
-const mutationObserverOptions = {config: {attributes: true, attributeFilter: ['class']}};
+import {useContext} from 'react';
+import {ThemeContext} from '@/context/ThemeContext';
 
 export function ThemeToggle() {
-	const [darkMode, setDarkMode] = useState(false);
+	const {theme, setTheme} = useContext(ThemeContext);
 
-	const documentClassChanged = useCallback(() => {
-		const isDarkMode = document.body.classList.contains('dark');
-		setDarkMode(isDarkMode);
-	}, [setDarkMode]);
-
-	useMutationObservable(document.body, documentClassChanged, mutationObserverOptions);
-
-	const toggleDarkMode = () => {
-		setDarkMode((mode) => !mode);
-		document.body.classList.toggle('dark');
-	};
+	const toggleDarkMode = () => setTheme(theme === 'dark' ? 'light' : 'dark');
 
 	return (
 		<button className='button_styleless text-font-primary' onClick={toggleDarkMode}>
-			{darkMode ? <FaMoon /> : <FaSun />}
+			{theme === 'dark' ? <FaMoon /> : <FaSun />}
 		</button>
 	);
 }
