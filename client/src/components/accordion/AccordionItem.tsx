@@ -1,6 +1,7 @@
 import React from 'react';
 import {ButtonHeader} from '@/components/accordion/ButtonHeader';
 import useCollapse from 'react-collapsed';
+import cx from 'classnames';
 
 export default function AccordionItem(props: AccordionItemProps) {
 	const {children, header, open = false, onToggle, className} = props;
@@ -16,10 +17,14 @@ export default function AccordionItem(props: AccordionItemProps) {
 		defaultExpanded: open,
 	});
 
+	const toggleOpen = () => {
+		setExpanded((open) => !open);
+	};
+
 	return (
-		<div className={className}>
-			<div className='items-center w-full bg-primary transition text-font-primary'>
-				<ButtonHeader onClick={() => setExpanded((expanded) => !expanded)} header={header} />
+		<div>
+			<div className={cx('items-center w-full bg-primary transition text-font-primary', className)}>
+				<ButtonHeader onClick={toggleOpen} header={header} />
 			</div>
 			<div {...getCollapseProps()}>
 				<div className='bg-primary text-font-primary w-full h-full'>{children}</div>
