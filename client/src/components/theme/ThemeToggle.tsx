@@ -8,8 +8,8 @@ export function ThemeToggle() {
 	const [darkMode, setDarkMode] = useState(false);
 
 	const documentClassChanged = useCallback(() => {
-		const darkMode = document.body.classList.contains('dark');
-		setDarkMode(darkMode);
+		const isDarkMode = document.body.classList.contains('dark');
+		setDarkMode(isDarkMode);
 	}, [setDarkMode]);
 
 	useMutationObservable(document.body, documentClassChanged, mutationObserverOptions);
