@@ -1,6 +1,6 @@
 // context/todoContext.tsx
 import {EmailModel, EmailModelSortArgs} from '@/shared/models/EmailModel';
-import {ReactNode, createContext, useContext, useEffect, useState} from 'react';
+import {ReactNode, createContext, useContext, useEffect, useState, useCallback, useMemo} from 'react';
 import {ImapDataContext} from './ImapDataContext';
 import {fetchEmails} from '@/scripts/api/EmailFetcher';
 import {sort} from '@/scripts/helpers/sort';
@@ -25,16 +25,19 @@ export const EmailProvider = ({children}: {children: ReactNode}) => {
 
 	const {imapData} = useContext(ImapDataContext);
 
-	const setEmails = (newEmails: EmailModel[]) => {
-		internalSetEmails(newEmails);
-	};
+	const setEmails = useCallback(
+		(newEmails: EmailModel[]) => {
+			internalSetEmails(newEmails);
+		},
+		[internalSetEmails]
+	);
 
-	const clearEmails = () => {
+	const clearEmails = useCallback(() => {
 		internalSetEmails([]);
 		localStorage.removeItem('imapData');
-	};
+	}, [internalSetEmails]);
 
-	const refreshEmails = async () => {
+	const refreshEmails = useCallback(async () => {
 		if (isFetching) return;
 		if (!imapData) return;
 
@@ -50,13 +53,14 @@ export const EmailProvider = ({children}: {children: ReactNode}) => {
 		}
 
 		setIsFetching(false);
-	};
+	}, [internalSetEmails, isFetching, imapData]);
 
-	const sortEmailsBy = (sortBy: EmailModelSortArgs) => {
-		internalSetEmails(sort(emails, sortBy));
-	};
+	const sortEmailsBy = useCallback(
+		(sortBy: EmailModelSortArgs) => internalSetEmails(sort(emails, sortBy)),
+		[internalSetEmails, emails]
+	);
 
-	const loadNextPage = async () => {
+	const loadNextPage = useCallback(async () => {
 		if (isFetching) return;
 		if (!imapData) return;
 
@@ -71,7 +75,7 @@ export const EmailProvider = ({children}: {children: ReactNode}) => {
 		}
 
 		setIsFetching(false);
-	};
+	}, [internalSetEmails, isFetching, imapData, emails]);
 
 	/**
 	 * Possible problems - if the user changes the imapData during the loading of the emails,
@@ -82,18 +86,17 @@ export const EmailProvider = ({children}: {children: ReactNode}) => {
 		loadNextPage();
 	}, [imapData]);
 
-	return (
-		<EmailContext.Provider
-			value={{
-				emails,
-				setEmails,
-				clearEmails,
-				loadNextPage,
-				isFetching,
-				refreshEmails,
-				sortEmailsBy,
-			}}>
-			{children}
-		</EmailContext.Provider>
-	);
+	const value: EmailContextType = useMemo(() => {
+		return {
+			emails,
+			setEmails,
+			clearEmails,
+			loadNextPage,
+			isFetching,
+			refreshEmails,
+			sortEmailsBy,
+		};
+	}, [emails, setEmails, clearEmails, loadNextPage, isFetching, refreshEmails, sortEmailsBy]);
+
+	return <EmailContext.Provider value={value}>{children}</EmailContext.Provider>;
 };

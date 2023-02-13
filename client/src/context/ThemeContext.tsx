@@ -1,5 +1,5 @@
 // context/todoContext.tsx
-import {ReactNode, createContext, useEffect, useState} from 'react';
+import {ReactNode, createContext, useEffect, useState, useCallback, useMemo} from 'react';
 
 export type Theme = 'light' | 'dark';
 
@@ -14,21 +14,9 @@ export const ThemeContext = createContext<ThemeContextType>();
 
 export const ThemeProvider = ({children}: {children: ReactNode}) => {
 	const [theme, internalSetTheme] = useState<Theme>('dark');
-	const setTheme = (newTheme: Theme) => {
-		internalSetTheme(newTheme);
-		if (newTheme === 'dark') {
-			document.body.classList.add('dark');
-		} else {
-			document.body.classList.remove('dark');
-		}
-	};
-
-	const resetTheme = () => {
-		getInitTheme();
-	};
 
 	useEffect(() => getInitTheme, []);
-	const getInitTheme = () => {
+	const getInitTheme = useCallback(() => {
 		const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 		if (darkMode) {
 			internalSetTheme('dark');
@@ -37,16 +25,31 @@ export const ThemeProvider = ({children}: {children: ReactNode}) => {
 			internalSetTheme('light');
 			document.body.classList.remove('dark');
 		}
-	};
+	}, [internalSetTheme]);
 
-	return (
-		<ThemeContext.Provider
-			value={{
-				theme,
-				resetTheme,
-				setTheme,
-			}}>
-			{children}
-		</ThemeContext.Provider>
+	const setTheme = useCallback(
+		(newTheme: Theme) => {
+			internalSetTheme(newTheme);
+			if (newTheme === 'dark') {
+				document.body.classList.add('dark');
+			} else {
+				document.body.classList.remove('dark');
+			}
+		},
+		[internalSetTheme]
 	);
+
+	const resetTheme = useCallback(() => {
+		getInitTheme();
+	}, [getInitTheme]);
+
+	const value = useMemo(() => {
+		return {
+			theme,
+			resetTheme,
+			setTheme,
+		};
+	}, [theme, resetTheme, setTheme]);
+
+	return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };
