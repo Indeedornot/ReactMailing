@@ -1,6 +1,6 @@
 import {FaMoon, FaSun} from 'react-icons/fa';
 import {useCallback, useState} from 'react';
-import {useMutationObservable} from '../../scripts/client/MutationObserverHook';
+import {useMutationObservable} from '@/scripts/client/MutationObserverHook';
 
 const mutationObserverOptions = {config: {attributes: true, attributeFilter: ['class']}};
 
