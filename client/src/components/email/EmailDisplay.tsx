@@ -10,7 +10,9 @@ import {EmailContext} from '@/context/EmailsContext';
 export default function EmailDisplay() {
 	const {emails, loadNextPage, isFetching, refreshEmails} = useContext(EmailContext);
 
-	const sortBy = (by: keyof EmailModel) => {};
+	const sortBy = (by: keyof EmailModel) => {
+		//not implemented
+	};
 
 	const [showList, setShowList] = useState(false);
 

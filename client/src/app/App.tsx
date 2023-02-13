@@ -3,7 +3,7 @@ import {useContext, useState} from 'react';
 import EmailDisplay from '@/components/email/EmailDisplay';
 import {fetchEmails} from '@/scripts/api/EmailFetcher';
 
-import {EmailModel, EmailModelSortArgs, } from '@/shared/models/EmailModel';
+import {EmailModel, EmailModelSortArgs} from '@/shared/models/EmailModel';
 import {sort} from '@/scripts/helpers/sort';
 import {ThemeToggle} from '@/components/theme/ThemeToggle';
 import {LoginButton} from '@/components/Login/LoginButton';

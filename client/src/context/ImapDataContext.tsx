@@ -1,6 +1,5 @@
 // context/todoContext.tsx
-import {ImapDataModel} from '@/shared/models/ImapDataModel';
-import {isValidImapData} from '@/shared/models/ImapDataModel';
+import {ImapDataModel, isValidImapData} from '@/shared/models/ImapDataModel';
 import {ReactNode, createContext, useEffect, useState} from 'react';
 
 export type ImapDataContextType = {
