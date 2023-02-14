@@ -7,7 +7,7 @@ export default function App() {
 		<div className='flex flex-col bg-secondary w-full h-full'>
 			{/* Header */}
 			<div className='h-[11%] w-full'>
-				<div className='h-1/3 bg-primary text-font-primary grid grid-cols-12 justify-items-center items-center'>
+				<div className='h-1/3 bg-primary text-primary grid grid-cols-12 justify-items-center items-center'>
 					<div className='col-span-3 flex'>
 						<ThemeToggle />
 					</div>

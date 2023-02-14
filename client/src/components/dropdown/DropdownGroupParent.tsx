@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function DropdownGroupParent({children}: DropdownItemGroupProps) {
 	return (
-		<button className='w-full text-left flex items-center outline-none focus:outline-none text-font-primary'>
+		<button className='w-full text-left flex items-center outline-none focus:outline-none text-primary'>
 			<span className='pr-1 flex-1'>{children}</span>
 			<span className='mr-auto'>
 				<svg

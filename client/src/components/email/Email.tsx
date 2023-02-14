@@ -13,7 +13,7 @@ const HeaderItemsStyle = 'row-span-1 overflow-hidden text-ellipsis whitespace-no
 const MemoIFrame = React.memo(({srcDoc}: {srcDoc: string}) => {
 	return (
 		<iframe
-			className='m-0 p-0 w-full h-full break-words border-b-2 border-accent bg-transparent text-font-primary overflow-auto'
+			className='m-0 p-0 w-full h-full break-words border-b-2 border-accent bg-transparent text-primary overflow-auto'
 			srcDoc={srcDoc}
 			title='Email Body'
 		/>

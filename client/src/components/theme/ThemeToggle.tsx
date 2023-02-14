@@ -8,7 +8,7 @@ export function ThemeToggle() {
 	const toggleDarkMode = () => setTheme(theme === 'dark' ? 'light' : 'dark');
 
 	return (
-		<button className='button_styleless text-font-primary' onClick={toggleDarkMode}>
+		<button className='button_styleless text-primary' onClick={toggleDarkMode}>
 			{theme === 'dark' ? <FaMoon /> : <FaSun />}
 		</button>
 	);

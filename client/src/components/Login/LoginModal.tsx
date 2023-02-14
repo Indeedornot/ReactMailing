@@ -80,11 +80,11 @@ export const LoginModal = ({setIsModalOpen}: LoginModalProps) => {
 					<div className='flex flex-row justify-between'>
 						<label>
 							<input type='checkbox' name='tls' checked={formData.tls} onChange={handleInputChange} />
-							<span className='ml-2 text-font-primary align-middle'>Use TLS</span>
+							<span className='ml-2 text-primary align-middle'>Use TLS</span>
 						</label>
 						<input
 							type='submit'
-							className='h-8 mt-1 w-44 bg-secondary hover:bg-accent m-0 p-0 rounded-md text-font-primary'
+							className='h-8 mt-1 w-44 bg-secondary hover:bg-accent m-0 p-0 rounded-md text-primary'
 						/>
 					</div>
 				</form>

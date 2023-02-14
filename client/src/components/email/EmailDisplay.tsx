@@ -24,7 +24,7 @@ export default function EmailDisplay() {
 	return (
 		<div className='h-full w-full flex flex-col overflow-y-hidden'>
 			{/* Header */}
-			<div className='grid grid-cols-12 w-full py-2 px-4 bg-primary border-b-2 border-accent text-font-primary'>
+			<div className='grid grid-cols-12 w-full py-2 px-4 bg-primary border-b-2 border-accent text-primary'>
 				<div className='flex self-center justify-self-center'>
 					<Dropdown header={<FaSort />}>
 						<DropdownItem>

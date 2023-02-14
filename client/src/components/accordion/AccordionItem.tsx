@@ -23,11 +23,11 @@ export default function AccordionItem(props: AccordionItemProps) {
 
 	return (
 		<div>
-			<div className={cx('items-center w-full bg-primary transition text-font-primary', className)}>
+			<div className={cx('items-center w-full bg-primary transition text-primary', className)}>
 				<ButtonHeader onClick={toggleOpen} header={header} />
 			</div>
 			<div {...getCollapseProps()}>
-				<div className='bg-primary text-font-primary w-full h-full'>{children}</div>
+				<div className='bg-primary text-primary w-full h-full'>{children}</div>
 			</div>
 		</div>
 	);

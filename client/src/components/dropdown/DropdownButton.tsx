@@ -2,7 +2,7 @@ import React from 'react';
 
 export function DropdownButton({children}: {children: React.ReactNode}) {
 	return (
-		<button className='outline-none focus:outline-none border-accent border px-3 py-1 bg-primary rounded-md flex items-center min-w-32 text-font-primary'>
+		<button className='outline-none focus:outline-none border-accent border px-3 py-1 bg-primary rounded-md flex items-center min-w-32 text-primary'>
 			<span className='pr-1 font-semibold flex-1'>{children}</span>
 			<span>
 				<svg
