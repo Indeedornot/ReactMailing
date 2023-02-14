@@ -1,88 +1,57 @@
 import {ImapDataContext} from '@/context/ImapDataContext';
 import Modal from '../modal/Modal';
-import {useContext, useState} from 'react';
-import {ImapDataModel} from '@/shared/models/ImapDataModel';
+import {useContext} from 'react';
+import {ImapDataModel, ImapDataSchema} from '@/shared/models/ImapDataModel';
+import {useZorm} from 'react-zorm';
 
-const InputStyle = 'block w-full rounded-md h-25 mb-3';
-
-const minPortValue = 100;
-const maxPortValue = 999;
+const InputStyle = 'block w-full rounded-md h-25 mt-3 first:mt-0';
 
 export const LoginModal = ({setIsModalOpen}: LoginModalProps) => {
-	const {setImapData} = useContext(ImapDataContext);
-	const [formData, setFormData] = useState<ImapDataModel>({
-		host: '',
-		port: 0,
-		username: '',
-		password: '',
-		tls: false,
+	const zo = useZorm('LogIn', ImapDataSchema, {
+		onValidSubmit: (e) => {
+			e.preventDefault();
+			handleLogin(e.data);
+		},
 	});
+	const disabled = zo.validation?.success === false;
 
-	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const target = event.target;
-		const value = getInputValue(target);
-		const name = target.name;
-
-		setFormData({
-			...formData,
-			[name]: value,
-		});
-	};
-
-	const getInputValue = (target: HTMLInputElement) => {
-		switch (target.type) {
-			case 'checkbox':
-				return target.checked;
-			case 'number':
-				return parseInt(target.value);
-			default:
-				return target.value;
-		}
-	};
-
-	const handleLogin = (event: React.SyntheticEvent) => {
-		event.preventDefault();
-		const success = setImapData(formData);
-		if (!success) return;
-
+	const {setImapData} = useContext(ImapDataContext);
+	const handleLogin = (data: ImapDataModel) => {
+		setImapData(data);
 		setIsModalOpen(false);
 	};
 
 	return (
 		<Modal setIsOpen={setIsModalOpen} className='w-11/12'>
 			<div className='w-full h-full flex flex-col bg-primary justify-items-center rounded-md px-2.5 py-3.5'>
-				<form onSubmit={handleLogin} className='flex flex-col'>
-					<input
-						type='text'
-						name='username'
-						className={InputStyle}
-						value={formData.username}
-						placeholder='Email'
-						onChange={handleInputChange}
-					/>
-					<input
-						type='password'
-						name='password'
-						className={InputStyle}
-						placeholder='Password'
-						onChange={handleInputChange}
-					/>
-					<input type='text' name='host' className={InputStyle} placeholder='Imap Host' onChange={handleInputChange} />
-					<input
-						type='number'
-						name='port'
-						min={minPortValue}
-						max={maxPortValue}
-						className={InputStyle}
-						placeholder='Imap Port'
-						onChange={handleInputChange}
-					/>
-					<div className='flex flex-row justify-between'>
+				<form ref={zo.ref} className='flex flex-col'>
+					<input type='text' name={zo.fields.username()} className={InputStyle} placeholder='Email' />
+					{zo.errors.username((e) => (
+						<ErrorMessage message={e.message} />
+					))}
+
+					<input type='password' name={zo.fields.password()} className={InputStyle} placeholder='Password' />
+					{zo.errors.password((e) => (
+						<ErrorMessage message={e.message} />
+					))}
+
+					<input type='text' name={zo.fields.host()} className={InputStyle} placeholder='Imap Host' />
+					{zo.errors.host((e) => (
+						<ErrorMessage message={e.message} />
+					))}
+
+					<input type='number' min='0' name={zo.fields.port()} className={InputStyle} placeholder='Imap Port' />
+					{zo.errors.port((e) => (
+						<ErrorMessage message={e.message} />
+					))}
+
+					<div className='flex flex-row justify-between mt-3'>
 						<label>
-							<input type='checkbox' name='tls' checked={formData.tls} onChange={handleInputChange} />
+							<input type='checkbox' defaultChecked={false} name={zo.fields.tls()} />
 							<span className='ml-2 text-primary align-middle'>Use TLS</span>
 						</label>
 						<input
+							disabled={disabled}
 							type='submit'
 							className='h-8 mt-1 w-44 bg-secondary hover:bg-accent m-0 p-0 rounded-md text-primary'
 						/>
@@ -91,6 +60,10 @@ export const LoginModal = ({setIsModalOpen}: LoginModalProps) => {
 			</div>
 		</Modal>
 	);
+};
+
+const ErrorMessage = ({message}: {message: string}) => {
+	return <div className='text-red-600 ml-0.5 text-[12px]'>{message}</div>;
 };
 
 type LoginModalProps = {
