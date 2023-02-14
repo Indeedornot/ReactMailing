@@ -1,11 +1,14 @@
 Client:
     ☐ Add Error handling for error responses from fetching emails
     ☐ Add signal for when emails no emails are found
-    ☐ Add Error message for invalid imap data in form
-    ☐ Label for LTS checkmark and add tooltip
+    ✔ Add Error message for invalid imap data in form @done(23-02-14 19:39)
+    ✔ Label for LTS checkmark and add tooltip @done(23-02-14 19:40)
 
 Server:
+    ☐ Add error handling for invalid imap data
 
 Shared:
+    ☐ Refactor expand SequenceSet to not return values that are smaller than 0 
+    (maybe use a boolean to implement this as optional)
     ☐ Rethink implementation of EmailSortArgs on Shared rather than on Client
     due to being coupled with implementation of sort helper on Client
