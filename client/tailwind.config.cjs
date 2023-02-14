@@ -8,16 +8,16 @@ module.exports = {
 				secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
 				accent: 'rgb(var(--color-accent) / <alpha-value>)',
 			},
+			textColor: {
+				primary: 'rgb(var(--color-text-primary) / <alpha-value>)',
+				secondary: 'rgb(var(--color-text-secondary) / <alpha-value>)',
+				accent: 'rgb(var(--color-text-accent) / <alpha-value>)',
+			},
 		},
 		borderColor: {
 			primary: 'rgb(var(--color-primary) / <alpha-value>)',
 			secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
 			accent: 'rgb(var(--color-accent) / <alpha-value>)',
-		},
-		textColor: {
-			primary: 'rgb(var(--color-text-primary) / <alpha-value>)',
-			secondary: 'rgb(var(--color-text-secondary) / <alpha-value>)',
-			accent: 'rgb(var(--color-text-accent) / <alpha-value>)',
 		},
 	},
 
