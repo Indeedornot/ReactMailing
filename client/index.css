@@ -20,11 +20,13 @@ body {
 	justify-content: center;
 	align-items: center;
 	position: relative;
+	width: 100vw;
+	height: 100vh;
 }
 
 .index_container {
-	width: 390px;
-	height: 844px;
+	width: 100%;
+	height: 100%;
 	position: relative;
 }
 

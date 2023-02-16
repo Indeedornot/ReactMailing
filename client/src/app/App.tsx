@@ -4,7 +4,7 @@ import {LoginButton} from '@/components/Login/LoginButton';
 
 export default function App() {
 	return (
-		<div className='flex flex-col bg-secondary w-full h-full'>
+		<div className='flex flex-col flex-none bg-secondary w-full h-full'>
 			{/* Header */}
 			<div className='h-[11%] w-full'>
 				<div className='h-1/3 bg-primary text-primary grid grid-cols-12 justify-items-center items-center'>
@@ -18,7 +18,7 @@ export default function App() {
 				</div>
 			</div>
 			{/* Body */}
-			<div className='flex-grow'>
+			<div className='flex-grow w-full min-h-0'>
 				<EmailDisplay />
 			</div>
 		</div>
