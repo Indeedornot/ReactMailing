@@ -18,13 +18,8 @@ export type SequenceSet = {from: number | '*'; to: number | '*'};
  *
  * 		expandSequenceSet({from: 1, to: *}, 10) // '1:10'
  */
-
 export const expandSequenceSet = (sequenceSet: SequenceSet, maxValue: number): string | null => {
-	const {from, to} = sequenceSet;
-
-	if (from === '*' || to === '*') {
-		return handleAsterix(sequenceSet, maxValue);
-	}
+	const {from, to} = sequenceToNums(sequenceSet, maxValue);
 
 	if (from === to) {
 		if (from < 0) {
@@ -35,6 +30,7 @@ export const expandSequenceSet = (sequenceSet: SequenceSet, maxValue: number): s
 		if (from > maxValue) {
 			return null;
 		}
+
 		return `${from}`;
 	}
 
@@ -71,23 +67,6 @@ export const expandSequenceSet = (sequenceSet: SequenceSet, maxValue: number): s
 	return null;
 };
 
-const handleAsterix = (sequenceSet: SequenceSet, maxValue: number): string | null => {
-	const {from, to} = sequenceSet;
-	if (from === '*' && to === '*') {
-		return `${maxValue}`;
-	}
-
-	const num = (from === '*' ? to : from) as number;
-	if (num >= 0) {
-		return toRangeOrSingle(num, maxValue, maxValue);
-	}
-
-	const nonNegativeNum = positiveOrZero(maxValue + num);
-	return toRangeOrSingle(nonNegativeNum, maxValue);
-};
-
-const positiveOrZero = (value: number) => Math.max(0, value);
-
 /**
  *
  * @param first Number in the range
@@ -115,3 +94,12 @@ const toRangeOrSingle = (first: number, second: number, maxValue?: number): stri
 
 	return `${min}:${max}`;
 };
+
+const sequenceToNums = (sequenceSet: SequenceSet, maxValue: number) => {
+	const from = sequenceSet.from === '*' ? maxValue : sequenceSet.from;
+	const to = sequenceSet.to === '*' ? maxValue : sequenceSet.to;
+
+	return {from, to};
+};
+
+const positiveOrZero = (value: number) => Math.max(0, value);
