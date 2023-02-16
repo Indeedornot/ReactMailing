@@ -51,7 +51,7 @@ export default function Email({email, onToggle}: EmailProps) {
 			open={false}
 			onToggle={onToggle}
 			header={
-				<div className='h-full w-full px-2 grid grid-cols-12 grid-rows-2 border-b bg-primary border-accent py-1.5'>
+				<div className='h-full w-full px-2 grid grid-cols-12 grid-rows-2 border-b bg-primary border-accent py-1.5 text-primary'>
 					<div className={cx('col-span-9', HeaderItemsStyle)}>{getSender()}</div>
 					<div className={cx('col-span-3 text-end', HeaderItemsStyle)}>{getDate()}</div>
 					<div className={cx('col-span-12 text-sm', HeaderItemsStyle)}>{getSubject()}</div>
