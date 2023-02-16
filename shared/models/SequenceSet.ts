@@ -1,90 +1,117 @@
+import {isUndefined} from '../jsUtils';
+
 export type SequenceSet = {from: number | '*'; to: number | '*'};
 
 /**
- *  all possible cases
- *  1. from: 1, to: 5  (from first email to 5th email)
  *
- *  2. from: 1, to: -1 (from first email to last email)
- *  3. from: 1, to: -5 (from first email to 5th last email)
+ * @param sequenceSet SequenceSet to expand
+ * @param maxValue Max value of the range
+ * @returns String representation of the expanded sequence set or null if both are out of bounds
  *
- *  4. from: -5, to: -1 (from 5th latest email to latest email)
- *  5. from: -5, to: -3 (from 5th latest email to 3rd latest)
+ * @example
+ * 		expandSequenceSet({from: 1, to: 5}, 10) // '1:5'
+ * 		expandSequenceSet({from: 1, to: 5}, 3) // '1:3'
+ * 		expandSequenceSet({from: 1, to: 5}, 1) // '1'
  *
- *  6. from: -5, to: 5 (from 5th latest email to 5th email)
- *  7. from: -5, to: 3 (from 5th latest email to 3rd email)
+ * 		expandSequenceSet({from: 1, to: -1}, 10) // '1:9'
+ * 		expandSequenceSet({from: 1, to: -1}, 3) // '1:2'
  *
- *  8. from: 5, to: 3 (from 5th email to 3rd email)
- *  9. from  5, to: 1 (from 5th email to first email)
- *
- *  10. from  * to: 1 (from latest email to first email)
- *  11. from: 5 to: * (from 5th email to latest email)
- *
- *  12. from * to: -1 (first and second email from latest)
- *  13. from * to: -5 (5 emails from latest)
- *
- *  14. from -5 to: * (from 5th latest email to latest email)
- *  15. from -3 to: * (from 3rd latest email to latest email)
+ * 		expandSequenceSet({from: 1, to: *}, 10) // '1:10'
  */
-//handles *:*, 1:1, -1:-1
 
-export const expandSequenceSet = (sequenceSet: SequenceSet, maxValue: number) => {
+export const expandSequenceSet = (sequenceSet: SequenceSet, maxValue: number): string | null => {
 	const {from, to} = sequenceSet;
 
+	if (from === '*' || to === '*') {
+		return handleAsterix(sequenceSet, maxValue);
+	}
+
+	if (from === to) {
+		if (from < 0) {
+			const nonNegativeNum = positiveOrZero(maxValue + from);
+			return `${nonNegativeNum}`;
+		}
+
+		if (from > maxValue) {
+			return null;
+		}
+		return `${from}`;
+	}
+
+	if (from > 0 && to > 0) {
+		return toRangeOrSingle(from, to, maxValue);
+	}
+
+	//has a zero
+	if (from * to === 0) {
+		const otherNum = from === 0 ? to : from;
+
+		if (otherNum < 0) {
+			const nonNeg = positiveOrZero(maxValue + otherNum);
+			return toRangeOrSingle(0, nonNeg);
+		}
+
+		return toRangeOrSingle(0, otherNum, maxValue);
+	}
+
+	if (from < 0 && to < 0) {
+		const nonNegFrom = positiveOrZero(maxValue + from);
+		const nonNegTo = positiveOrZero(maxValue + to);
+		return toRangeOrSingle(nonNegFrom, nonNegTo);
+	}
+
+	if (from * to < 0) {
+		const neg = Math.min(from, to);
+		const pos = Math.max(from, to);
+
+		const loopedNeg = positiveOrZero(maxValue + neg);
+		return toRangeOrSingle(loopedNeg, pos, maxValue);
+	}
+
+	return null;
+};
+
+const handleAsterix = (sequenceSet: SequenceSet, maxValue: number): string | null => {
+	const {from, to} = sequenceSet;
 	if (from === '*' && to === '*') {
 		return `${maxValue}`;
 	}
 
-	if (from === '*' || to === '*') {
-		const notStar = (from === '*' ? to : from) as number;
-
-		if (notStar > 0) {
-			return `${notStar}:${maxValue}`;
-		}
-
-		return `${maxValue + notStar}:${maxValue}`;
+	const num = (from === '*' ? to : from) as number;
+	if (num >= 0) {
+		return toRangeOrSingle(num, maxValue, maxValue);
 	}
 
-	//1:1, -1:-1, 0:0
-	if (from === to) {
-		if (from < 0) {
-			return `${maxValue + from}`;
-		}
+	const nonNegativeNum = positiveOrZero(maxValue + num);
+	return toRangeOrSingle(nonNegativeNum, maxValue);
+};
 
-		return `${from}`;
+const positiveOrZero = (value: number) => Math.max(0, value);
+
+/**
+ *
+ * @param first Number in the range
+ * @param second Number in the range
+ * @param maxValue Optional max value of the range, not needed for certain cases
+ * @returns String representation of the range or null if both are out of bounds
+ */
+const toRangeOrSingle = (first: number, second: number, maxValue?: number): string | null => {
+	//both are out of bounds
+	if (!isUndefined(maxValue) && first > maxValue && second > maxValue) {
+		return null;
 	}
 
-	//1:1, -1:-1
-	if (from * to > 0) {
-		const min = Math.min(from, to);
-		const max = Math.max(from, to);
+	const min = Math.min(first, second);
+	let max = Math.max(first, second);
 
-		if (min < 0) {
-			return `${maxValue + min}:${maxValue + max}`;
-		}
-
-		return `${min}:${max}`;
+	//Pad it to not exceed the max value
+	if (!isUndefined(maxValue) && max > maxValue) {
+		max = maxValue;
 	}
 
-	//1:-1, -1:1
-	if (from * to < 0) {
-		const min = Math.min(from, to); //min is always negative
-		const max = Math.max(from, to); //max is always positive
-
-		if (maxValue + min === max) {
-			return `${max}`;
-		}
-
-		return `${max}:${maxValue + min}`;
+	if (min === max) {
+		return `${min}`;
 	}
 
-	//0:1, 0:-1
-	if (from * to === 0) {
-		const notZero = from === 0 ? to : from;
-
-		if (notZero > 0) {
-			return `0:${notZero}`;
-		}
-
-		return `0:${maxValue + notZero}`;
-	}
+	return `${min}:${max}`;
 };
