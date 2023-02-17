@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {EmailModel} from '@/shared/models/EmailModel';
-import {Virtuoso} from 'react-virtuoso';
+import {Virtuoso, VirtuosoHandle} from 'react-virtuoso';
 import Email from './Email';
 import cx from 'classnames';
 import {emailsPerPage} from '@/context/EmailsContext';
+import {useCallback} from 'react';
 
 const Footer = () => {
 	return (
@@ -18,24 +19,31 @@ const Footer = () => {
 	);
 };
 
-const VirtuosoStyle = `h-full w-full`;
 const MemoizedEmail = React.memo(Email);
-const getMemoizedEmail = (index: number, email: EmailModel) => {
-	return <MemoizedEmail email={email}></MemoizedEmail>;
-};
 
 export default function EmailsVirtualized({emails, loadNextPage, scrollbar = false}: EmailsVirtualizedProps) {
+	const ref = useRef<HTMLDivElement>(null);
+
+	const getMemoizedEmail = useCallback(
+		(index: number, email: EmailModel) => {
+			return <MemoizedEmail email={email} maxHeight={ref?.current?.clientHeight || 100}></MemoizedEmail>;
+		},
+		[ref]
+	);
+
 	return (
-		<Virtuoso
-			className={cx(VirtuosoStyle, !scrollbar && 'scrollbar_hidden')}
-			data={emails}
-			endReached={loadNextPage}
-			overscan={emailsPerPage}
-			itemContent={getMemoizedEmail}
-			components={{
-				Footer,
-			}}
-		/>
+		<div ref={ref} className='w-full h-full'>
+			<Virtuoso
+				className={cx('h-full w-full', !scrollbar && 'scrollbar_hidden')}
+				data={emails}
+				endReached={loadNextPage}
+				overscan={emailsPerPage}
+				itemContent={(i, e) => getMemoizedEmail(i, e)}
+				components={{
+					Footer,
+				}}
+			/>
+		</div>
 	);
 }
 

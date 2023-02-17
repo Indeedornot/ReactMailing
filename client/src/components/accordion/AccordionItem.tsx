@@ -2,7 +2,7 @@ import React from 'react';
 import useCollapse from 'react-collapsed';
 
 export default function AccordionItem(props: AccordionItemProps) {
-	const {children, header, open = false, onToggle, className} = props;
+	const {children, header, open = false, onToggle, className, style} = props;
 
 	const {getCollapseProps, setExpanded} = useCollapse({
 		duration: 300,
@@ -20,8 +20,8 @@ export default function AccordionItem(props: AccordionItemProps) {
 	};
 
 	return (
-		<div>
-			<button onClick={toggleOpen} className='h-full w-full p-0 m-0 button_styleless'>
+		<div className={className} style={style}>
+			<button onClick={toggleOpen} className='p-0 m-0 button_styleless'>
 				{header}
 			</button>
 			<div {...getCollapseProps()}>
@@ -37,4 +37,5 @@ type AccordionItemProps = {
 	open?: boolean;
 	onToggle?: (isOpen: boolean) => void;
 	className?: string;
+	style?: React.CSSProperties;
 };

@@ -2,7 +2,7 @@ import {EmailModel} from '@/shared/models/EmailModel';
 import AccordionItem from '@/components/accordion/AccordionItem';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import React from 'react';
+import React, {useMemo} from 'react';
 import cx from 'classnames';
 
 dayjs.extend(relativeTime);
@@ -20,7 +20,8 @@ const MemoIFrame = React.memo(({srcDoc}: {srcDoc: string}) => {
 	);
 });
 
-export default function Email({email, onToggle}: EmailProps) {
+const headerHeight = 60;
+export default function Email({email, onToggle, maxHeight}: EmailProps) {
 	const getSender = () => {
 		if (!email?.SenderName && !email?.SenderEmail) return 'Unknown';
 
@@ -45,19 +46,26 @@ export default function Email({email, onToggle}: EmailProps) {
 		return 'Unknown';
 	};
 
+	const bodyHeight = useMemo(() => {
+		return maxHeight - headerHeight;
+	}, [maxHeight]);
+
 	return (
 		<AccordionItem
-			className='w-full h-[60px]'
+			className='flex flex-none flex-col w-full'
+			style={{maxHeight: maxHeight}}
 			open={false}
 			onToggle={onToggle}
 			header={
-				<div className='h-full w-full px-2 grid grid-cols-12 grid-rows-2 border-b bg-primary border-accent py-1.5 text-primary'>
+				<div
+					style={{height: headerHeight}}
+					className='flex-none w-full px-2 grid grid-cols-12 grid-rows-2 border-b bg-primary border-accent py-1.5 text-primary'>
 					<div className={cx('col-span-9', HeaderItemsStyle)}>{getSender()}</div>
 					<div className={cx('col-span-3 text-end', HeaderItemsStyle)}>{getDate()}</div>
 					<div className={cx('col-span-12 text-sm', HeaderItemsStyle)}>{getSubject()}</div>
 				</div>
 			}>
-			<div className='w-full h-[200px] bg-white'>
+			<div style={{height: bodyHeight}} className='w-full flex flex-grow bg-white'>
 				<MemoIFrame srcDoc={email.Body ? email.Body : ''}></MemoIFrame>
 			</div>
 		</AccordionItem>
@@ -67,4 +75,5 @@ export default function Email({email, onToggle}: EmailProps) {
 type EmailProps = {
 	email: EmailModel;
 	onToggle?: (isOpen: boolean) => void;
+	maxHeight: number;
 };
