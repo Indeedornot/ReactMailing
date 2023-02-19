@@ -1,4 +1,3 @@
-import {EmailModelSortArgs} from '@/shared/models/EmailModel';
 import Dropdown from '@/components/dropdown/Dropdown';
 import {FaSort} from 'react-icons/fa';
 import DropdownItem from '@/components/dropdown/DropdownItem';
@@ -6,11 +5,13 @@ import {MdRestartAlt} from 'react-icons/md';
 import {useContext, useEffect, useState} from 'react';
 import EmailsVirtualized from './EmailsVirtualized';
 import {EmailContext} from '@/context/EmailsContext';
+import {SortArg} from '@/scripts/helpers/sort';
+import {EmailModel} from '@/shared/models/EmailModel';
 
 export default function EmailDisplay() {
 	const {emails, loadNextPage, isFetching, refreshEmails, sortEmailsBy} = useContext(EmailContext);
 
-	const sortBy = (by: EmailModelSortArgs) => {
+	const sortBy = (by: SortArg<EmailModel>) => {
 		sortEmailsBy(by);
 	};
 

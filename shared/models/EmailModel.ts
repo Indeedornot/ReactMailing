@@ -7,8 +7,6 @@ export type EmailModel = {
 	SenderEmail: string | undefined;
 };
 
-export type EmailModelSortArgs = keyof EmailModel | `-${string & keyof EmailModel}`;
-
 export const SampleData = [
 	{
 		id: 'acd2c55e-005f-4040-a0bd-b45b2e75e84d',
