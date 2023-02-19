@@ -1,3 +1,6 @@
+All:
+    ☐ Add trpc to client and server for safe api calls
+
 Client:
     ☐ Add Error handling for error responses from fetching emails
     ☐ Add signal for when emails no emails are found
@@ -5,10 +8,11 @@ Client:
     ✔ Label for LTS checkmark and add tooltip @done(23-02-14 19:40)
 
 Server:
-    ☐ Add error handling for invalid imap data
+    ☐ Add error handling for error fetching
+    Assumed to be done with trpc
 
 Shared:
-    ☐ Refactor expand SequenceSet to not return values that are smaller than 0 
+    ✔ Refactor expand SequenceSet to not return values that are smaller than 0 @done(23-02-19 22:15)
     (maybe use a boolean to implement this as optional)
-    ☐ Rethink implementation of EmailSortArgs on Shared rather than on Client
+    ✔ Move implementation of EmailSortArgs to Client @done(23-02-19 22:19)
     due to being coupled with implementation of sort helper on Client
