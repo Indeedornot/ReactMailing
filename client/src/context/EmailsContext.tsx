@@ -1,9 +1,10 @@
 // context/todoContext.tsx
-import {EmailModel, EmailModelSortArgs} from '@/shared/models/EmailModel';
+import {EmailModel} from '@/shared/models/EmailModel';
 import {ReactNode, createContext, useContext, useEffect, useState, useCallback, useMemo} from 'react';
 import {ImapDataContext} from './ImapDataContext';
 import {fetchEmails} from '@/scripts/api/EmailFetcher';
 import {sort} from '@/scripts/helpers/sort';
+import {SortArg} from '../scripts/helpers/sort';
 
 export type EmailContextType = {
 	emails: EmailModel[];
@@ -11,7 +12,7 @@ export type EmailContextType = {
 	clearEmails: () => void;
 	loadNextPage: () => Promise<void>;
 	refreshEmails: () => Promise<void>;
-	sortEmailsBy: (sortBy: EmailModelSortArgs) => void;
+	sortEmailsBy: (sortBy: SortArg<EmailModel>) => void;
 	isFetching: boolean;
 };
 
@@ -56,7 +57,7 @@ export const EmailProvider = ({children}: {children: ReactNode}) => {
 	}, [internalSetEmails, isFetching, imapData]);
 
 	const sortEmailsBy = useCallback(
-		(sortBy: EmailModelSortArgs) => internalSetEmails(sort(emails, sortBy)),
+		(sortBy: SortArg<EmailModel>) => internalSetEmails(sort(emails, sortBy)),
 		[internalSetEmails, emails]
 	);
 
