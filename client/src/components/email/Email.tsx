@@ -20,35 +20,41 @@ const MemoIFrame = React.memo(({srcDoc}: {srcDoc: string}) => {
 	);
 });
 
+const getEmailSender = (email: EmailModel) => {
+	if (email.SenderName) {
+		return email.SenderName;
+	}
+
+	if (email.SenderEmail) {
+		return email.SenderEmail;
+	}
+
+	return 'Unknown';
+};
+
+const getEmailSubject = (email: EmailModel) => {
+	if (email.Subject) {
+		return email.Subject;
+	}
+
+	return 'No Subject';
+};
+
+const getEmailDate = (email: EmailModel) => {
+	if (email.Date) {
+		return dayjs(email.Date).fromNow();
+	}
+
+	return 'Unknown';
+};
+
 const headerHeight = 60;
 export default function Email({email, onToggle, maxHeight}: EmailProps) {
-	const getSender = () => {
-		if (!email?.SenderName && !email?.SenderEmail) return 'Unknown';
+	const bodyHeight = maxHeight - headerHeight;
 
-		if (email.SenderName) {
-			return email.SenderName;
-		} else if (email.SenderEmail) {
-			return email.SenderEmail;
-		}
-	};
-	const getSubject = () => {
-		if (email && email.Subject) {
-			return email.Subject;
-		}
-
-		return 'No Subject';
-	};
-	const getDate = () => {
-		if (email && email.Date) {
-			return dayjs(email.Date).fromNow();
-		}
-
-		return 'Unknown';
-	};
-
-	const bodyHeight = useMemo(() => {
-		return maxHeight - headerHeight;
-	}, [maxHeight]);
+	const sender = getEmailSender(email);
+	const date = getEmailDate(email);
+	const subject = getEmailSubject(email);
 
 	return (
 		<AccordionItem
@@ -60,9 +66,9 @@ export default function Email({email, onToggle, maxHeight}: EmailProps) {
 				<div
 					style={{height: headerHeight}}
 					className='flex-none w-full px-2 grid grid-cols-12 grid-rows-2 border-b bg-primary border-accent py-1.5 text-primary'>
-					<div className={cx('col-span-9', HeaderItemsStyle)}>{getSender()}</div>
-					<div className={cx('col-span-3 text-end', HeaderItemsStyle)}>{getDate()}</div>
-					<div className={cx('col-span-12 text-sm', HeaderItemsStyle)}>{getSubject()}</div>
+					<div className={cx('col-span-9', HeaderItemsStyle)}>{sender}</div>
+					<div className={cx('col-span-3 text-end', HeaderItemsStyle)}>{date}</div>
+					<div className={cx('col-span-12 text-sm', HeaderItemsStyle)}>{subject}</div>
 				</div>
 			}>
 			<div style={{height: bodyHeight}} className='w-full flex flex-grow bg-white'>
