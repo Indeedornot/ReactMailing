@@ -6,7 +6,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "concurrently \"npm start --prefix server\" \"npm run dev --prefix client\"",
 		"lint": "npm run lint --prefix client && npm run lint --prefix server && npm run lint --prefix shared",
-		"install": "npm install --prefix client && npm install --prefix server && npm install --prefix shared"
+		"install": "npm install && npm install --prefix client && npm install --prefix server && npm install --prefix shared"
 	},
 	"keywords": [],
 	"author": "",
