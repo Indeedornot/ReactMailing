@@ -15,7 +15,22 @@
 ## About The Project
 
 <div align="center">
-<image style="width: 70%; height: 70%;" src="https://user-images.githubusercontent.com/49447848/214327016-4166dc5e-5e37-4417-b0f9-5cb117f3319e.png" />
+
+<table>
+   <thead>
+      <tr>
+         <th>Light Mode</th>
+         <th>Dark Mode</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td> <image src="https://user-images.githubusercontent.com/49447848/222988566-a2ae03c0-46f1-4e3f-8c6b-69c4c6ee3ce4.png" /> </td>
+         <td> <image src="https://user-images.githubusercontent.com/49447848/222988577-a443ae6a-acc2-43c4-b31c-5af147c23e9c.png" /> </td>
+      </tr>
+   </tbody>
+</table>
+
 </div>
 
 ### Built With
