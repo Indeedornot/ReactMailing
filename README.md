@@ -62,7 +62,7 @@
    ```
 2. Install NPM packages
    ```sh
-   npm run install
+   npm install
    ```
 3. Run
    ```sh
